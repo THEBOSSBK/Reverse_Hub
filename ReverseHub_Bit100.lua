@@ -33,19 +33,7 @@ local Window = Rayfield:CreateWindow({
    }
 })
 -------------แมพตกปลาfish
-local Player = game:GetService("Players")
-local LocalPlayer = Player.LocalPlayer
-local Char = LocalPlayer.Character
-local Humanoid = Char.Humanoid
-local VirtualInputManager = game:GetService("VirtualInputManager")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-equipitem = function(v)
-if LocalPlayer.Backpack:FindFirstChild(v) then
-    local a = LocalPlayer.Backpack:FindFirstChild(v)
-        Humanoid:EquipTool(a)
-    end
-end
 --หน้าที่1
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
 local Toggle = Tab:CreateToggle({
@@ -53,13 +41,6 @@ local Toggle = Tab:CreateToggle({
     CurrentValue = false,
     Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(v)
-         _G.AutoCast = v
-         pcall(function()
-               while _G.AutoCast do wait()
- local Rod = Char:FindFirstChildOfClass("Tool")
-                task.wait(.1)
-                    Rod.events.cast:FireServer(100,1)
-        end
-    end)
+         
 --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
