@@ -39,7 +39,6 @@ local Char = LocalPlayer.Character
 local Humanoid = Char.Humanoid
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local GuiService = game:GetService("GuiService")
 
 equipitem = function(v)
 if LocalPlayer.Backpack:FindFirstChild(v) then
@@ -57,7 +56,7 @@ local Toggle = Tab:CreateToggle({
          _G.AutoCast = v
          pcall(function()
                while _G.AutoCast do wait()
-    local Rod = Char:FindFirstChildOfClass("Tool")
+ local Rod = Char:FindFirstChildOfClass("Tool")
                 task.wait(.1)
                     Rod.events.cast:FireServer(100,1)
         end
