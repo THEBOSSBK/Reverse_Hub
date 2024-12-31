@@ -32,15 +32,39 @@ local Window = Rayfield:CreateWindow({
       Key = {"Admin"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
--------------แมพตกปลาfish
-
---หน้าที่1
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
+
+-------------แมพตกปลาfish
+local Player = game:GetService("Players")
+local LocalPlayer = Player.LocalPlayer
+local Char = LocalPlayer.Character
+local Humanoid = Char.Humanoid
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GuiService = game:GetService("GuiService")
+
+equipitem = function(v)
+if LocalPlayer.Backpack:FindFirstChild(v) then
+    local a = LocalPlayer.Backpack:FindFirstChild(v)
+        Humanoid:EquipTool(a)
+    end
+end
+--หน้าที่1
+
 local Toggle = Tab:CreateToggle({
         Name = "AutoFishing",
         CurrentValue = false,
         Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Value)
+         _G.AutoCast = Value
+     pcall(function()
+while _G.AutoCast do wait()
+    local Rod = Char:FindFirstChildOfClass("Tool")
+                task.wait(.1)
+                    Rod.events.cast:FireServer(100,1)
+        end
+    end
+         )
             print(Value)
         end,
     })
