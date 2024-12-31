@@ -37,10 +37,13 @@ local Window = Rayfield:CreateWindow({
 --หน้าที่1
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
 local Toggle = Tab:CreateToggle({
-    Name = "ออโต้ตกปลา",
-    CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(v)
+        Name = "AutoFishing",
+        CurrentValue = false,
+        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Value)
+            print(Value)
+        end,
+    })
          
 --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
