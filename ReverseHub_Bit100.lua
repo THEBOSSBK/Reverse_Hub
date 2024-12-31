@@ -32,5 +32,20 @@ local Window = Rayfield:CreateWindow({
       Key = {"Admin"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
+--หน้าที่1
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
+local Toggle = Tab:CreateToggle({
+    Name = "ออโต้ตกปลา",
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(InfiniteJumpEnabled)
+        local InfiniteJumpEnabled = true
+        game:GetService("UserInputService").JumpRequest:connect(function()
+            if InfiniteJumpEnabled then
+                game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+            end
+        end)
+    end,
+ })
+--หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
