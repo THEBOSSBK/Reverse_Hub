@@ -33,4 +33,4 @@ local Window = Rayfield:CreateWindow({
    }
 })
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
-local Tab1 = Window:CreateTab("ผู้เล่น", "square-user")
+local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
