@@ -528,7 +528,7 @@ local CoreGui = game:GetService("CoreGui")
 
 -- Interface Management
 
-local ReverseHub = useStudio and script.Parent:FindFirstChild('ReverseHub') or game:GetObjects("rbxassetid://10804731440")[1]
+local ReverseHub = useStudio and script.Parent:FindFirstChild('ReverseHub') or game:GetObjects("rbxassetid://108667274205405")[1]
 local buildAttempts = 0
 local correctBuild = false
 local warned
@@ -547,7 +547,7 @@ repeat
 		warned = true
 	end
 
-	toDestroy, ReverseHub = ReverseHub, useStudio and script.Parent:FindFirstChild('ReverseHub') or game:GetObjects("rbxassetid://10804731440")[1]
+	toDestroy, ReverseHub = ReverseHub, useStudio and script.Parent:FindFirstChild('ReverseHub') or game:GetObjects("rbxassetid://108667274205405")[1]
 	if toDestroy and not useStudio then toDestroy:Destroy() end
 
 	buildAttempts = buildAttempts + 1
