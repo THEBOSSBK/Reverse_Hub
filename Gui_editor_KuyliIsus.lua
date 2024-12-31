@@ -13,8 +13,8 @@ Max   | Programming
 
 local InterfaceBuild = '1VEX'
 local Release = "Build 1.56"
-local RayfieldFolder = "Rayfield"
-local ConfigurationFolder = RayfieldFolder.."/Configurations"
+local RayfieldFolder = "ReverseHub"
+local ConfigurationFolder = ReverseHubFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
 
 local HttpService = game:GetService("HttpService")
@@ -555,13 +555,13 @@ end
 
 -- Object Variables
 
-local Main = Rayfield.Main
-local MPrompt = Rayfield:FindFirstChild('Prompt')
+local Main = ReverseHub.Main
+local MPrompt = ReverseHub:FindFirstChild('Prompt')
 local Topbar = Main.Topbar
 local Elements = Main.Elements
 local LoadingFrame = Main.LoadingFrame
 local TabList = Main.TabList
-local dragBar = Rayfield:FindFirstChild('Drag')
+local dragBar = ReverseHub:FindFirstChild('Drag')
 local dragInteract = dragBar and dragBar.Interact or nil
 local dragBarCosmetic = dragBar and dragBar.Drag or nil
 
