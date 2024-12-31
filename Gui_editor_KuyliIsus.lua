@@ -591,7 +591,7 @@ if ReverseHub.AbsoluteSize.X < minSize.X and ReverseHub.AbsoluteSize.Y < minSize
 end
 
 if UserInputService.TouchEnabled then
-	useMobilePrompt = true
+	useMobilePrompt = false
 end
 
 
