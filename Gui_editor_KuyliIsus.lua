@@ -1299,7 +1299,7 @@ function ReverseHubLibrary:CreateWindow(Settings)
 	LoadingFrame.Subtitle.Text = Settings.LoadingSubtitle or "Interface Suite"
 
 	if Settings.LoadingTitle ~= "ReverseHub Interface Suite" then
-		LoadingFrame.Version.Text = "ReverseHub UI"
+		LoadingFrame.Version.Text = "ReverseHub"
 	end
 
 	if Settings.Icon and Settings.Icon ~= 0 and Topbar:FindFirstChild('Icon') then
