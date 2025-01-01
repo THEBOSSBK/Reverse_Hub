@@ -1,4 +1,4 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
+local ReverseHub = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
 local Window = Rayfield:CreateWindow({
    Name = "Reverse_Hub",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -33,9 +33,9 @@ local Window = Rayfield:CreateWindow({
    }
 })
 
-If game.PlaceId 12996550309 then
+------------แมพตกปลาfish
+If game.PlaceId 16732694052 then
    local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
--------------แมพตกปลาfish
    local Player = game:GetService("Players")
    local LocalPlayer = Player.LocalPlayer
    local Char = LocalPlayer.Character
@@ -43,7 +43,7 @@ If game.PlaceId 12996550309 then
    local VirtualInputManager = game:GetService("VirtualInputManager")
    local ReplicatedStorage = game:GetService("ReplicatedStorage")
    local GuiService = game:GetService("GuiService")
---หน้าที่1
+   --หน้าที่1
    local Toggle = Tab:CreateToggle({
            Name = "AutoFishing",
            CurrentValue = false,
@@ -52,6 +52,6 @@ If game.PlaceId 12996550309 then
                print(Value)
            end,
        })
---หน้าที่2
+   --หน้าที่2
    local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
 else ReverseHub:Destroy()
