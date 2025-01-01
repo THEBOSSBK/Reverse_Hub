@@ -32,6 +32,10 @@ local Window = Rayfield:CreateWindow({
       Key = {"Admin"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
+If game.PlaceId == 12996550309 then
+   print "true"
+else game.PlaceId == 12996550309 then
+   print "false"
 
 ------------แมพตกปลาfish
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
