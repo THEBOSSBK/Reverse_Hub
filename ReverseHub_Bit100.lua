@@ -34,25 +34,22 @@ local Window = Rayfield:CreateWindow({
 })
 
 ------------แมพตกปลาfish
-If game.PlaceId 16732694052 then
-   local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
-   local Player = game:GetService("Players")
-   local LocalPlayer = Player.LocalPlayer
-   local Char = LocalPlayer.Character
-   local Humanoid = Char.Humanoid
-   local VirtualInputManager = game:GetService("VirtualInputManager")
-   local ReplicatedStorage = game:GetService("ReplicatedStorage")
-   local GuiService = game:GetService("GuiService")
-   --หน้าที่1
-   local Toggle = Tab:CreateToggle({
-           Name = "AutoFishing",
-           CurrentValue = false,
-           Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-           Callback = function(Value)
-               print(Value)
-           end,
-       })
+local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
+local Player = game:GetService("Players")
+local LocalPlayer = Player.LocalPlayer
+local Char = LocalPlayer.Character
+local Humanoid = Char.Humanoid
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GuiService = game:GetService("GuiService")
+--หน้าที่1
+local Toggle = Tab:CreateToggle({
+        Name = "AutoFishing",
+        CurrentValue = false,
+        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Value)
+            print(Value)
+        end,
+    })
    --หน้าที่2
-   local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
-else Rayfield:Destroy(),
-   print "Destory"
+local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
