@@ -1,4 +1,4 @@
-local ReverseHub = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
 local Window = Rayfield:CreateWindow({
    Name = "Reverse_Hub",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -54,5 +54,5 @@ If game.PlaceId 16732694052 then
        })
    --หน้าที่2
    local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
-else ReverseHub:Destroy(),
+else Rayfield:Destroy(),
    print "Destory"
