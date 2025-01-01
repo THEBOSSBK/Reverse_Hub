@@ -1,8 +1,8 @@
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
-local Window = Rayfield:CreateWindow({
-   Name = "Reverse_Hub",
+local ReverseHub = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
+local Window = ReverseHub:CreateWindow({
+   Name = "ReverseHub_Fisch",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "Checking Map.....",
+   LoadingTitle = "Loading...",
    LoadingSubtitle = "by THEBOSS_K1Y",
    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
@@ -32,10 +32,6 @@ local Window = Rayfield:CreateWindow({
       Key = {"Admin"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
-If game.PlaceId == 12996550309 then
-   print "true"
-else game.PlaceId == 12996550309 then
-   print "false"
 
 ------------แมพตกปลาfish
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
