@@ -11,18 +11,18 @@
 
 
 
-local InterfaceBuild = '1VEX'
-local Release = "Build 1.6"
+local InterfaceBuild = '9NBD'
+local Release = "Build 1.65"
 local ReverseHubFolder = "ReverseHub"
 local ConfigurationFolder = ReverseHubFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
 local settingsTable = {
 	General = {
 		-- if needs be in order just make getSetting(name)
-		rayfieldOpen = {Type = 'bind', Value = 'K', Name = 'ReverseHub Keybind'},
+		ReverseHubOpen = {Type = 'bind', Value = 'K', Name = 'ReverseHub Keybind'},
 	},
 	System = {
-		analytics = {Type = 'toggle', Value = true, Name = 'Anonymised Analytics'},
+		usageAnalytics = {Type = 'toggle', Value = true, Name = 'Anonymised Analytics'},
 	}
 }
 
@@ -30,11 +30,7 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
 -- Environment Check
-local useStudio
-
-if RunService:IsStudio() then
-	useStudio = true
-end
+local useStudio = RunService:IsStudio() or false
 
 local settingsCreated = false
 local cachedSettings
@@ -53,22 +49,7 @@ local function loadSettings()
 	-- for debug in studio
 	if useStudio then
 		file = [[
-		{
-    		"General": {
-        		"toggleexample": {
-            		"Value": true,
-            		"Type": "toggle",
-            		"Name": "Toggle"
-        		}
-    		},
-    		"System": {
-        		"analytics": {
-           	 	"Value": true,
-          		  	"Type": "toggle",
-        		    "Name": "Anonymised Analytics"
-       			}
-    		}
-		}
+		{"General":{"ReverseHubOpen":{"Value":"K","Type":"bind","Name":"ReverseHub Keybind","Element":{"HoldToInteract":false,"Name":"ReverseHub Keybind","Set":null,"CallOnChange":true,"Callback":null,"CurrentKeybind":"K"}}},"System":{"usageAnalytics":{"Value":false,"Type":"toggle","Name":"Anonymised Analytics","Element":{"Ext":true,"Name":"Anonymised Analytics","Set":null,"CurrentValue":true,"Callback":null}}}}
 	]]
 	end
 
@@ -106,35 +87,37 @@ end
 
 loadSettings()
 
-if not cachedSettings or not cachedSettings.System or not cachedSettings.System.analytics then
-	local fileFunctionsAvailable = isfile and writefile and readfile
+--if not cachedSettings or not cachedSettings.System or not cachedSettings.System.usageAnalytics then
+--	local fileFunctionsAvailable = isfile and writefile and readfile
 
-	if not fileFunctionsAvailable and not useStudio then
-		warn('ReverseHub Interface Suite | Sirius Analytics:\n\n\nAs you don\'t have file functionality with your executor, we are unable to save whether you want to opt in or out to analytics.\nIf you do not want to take part in anonymised usage statistics, let us know in our Discord at sirius.menu/discord and we will manually opt you out.')
-		analytics = true	
+--	if not fileFunctionsAvailable and not useStudio then
+--		warn('ReverseHub Interface Suite | Sirius Analytics:\n\n\nAs you don\'t have file functionality with your executor, we are unable to save whether you want to opt in or out to analytics.\nIf you do not want to take part in anonymised usage statistics, let us know in our Discord at sirius.menu/discord and we will manually opt you out.')
+--		analytics = true	
+--	else
+--		prompt.create(
+--			'Help us improve',
+--	            [[Would you like to allow Sirius to collect usage statistics?
+
+--<font transparency='0.4'>No data is linked to you or your personal activity.</font>]],
+--			'Continue',
+--			'Cancel',
+--			function(result)
+--				settingsTable.System.usageAnalytics.Value = result
+--				analytics = result
+--			end
+--		)
+--	end
+
+--	repeat task.wait() until analytics ~= nil
+--end
+
+if #cachedSettings == 0 or (cachedSettings.System and cachedSettings.System.usageAnalytics and cachedSettings.System.usageAnalytics.Value) then
+	if useStudio then
+		print('Sending analytics')
 	else
-		prompt.create(
-			'Sirius Analytics',
-	            [[Would you like to allow Sirius to collect usage statistics?
-
-No data is linked to you or your personal activity.]],
-			'Continue',
-			'Cancel',
-			function(result)
-				settingsTable.System.analytics.Value = result
-				analytics = result
-			end
-		)
+		local reporter = loadstring(game:HttpGet("https://analytics.sirius.menu/reporter"))()
+		reporter.report("0193dbf8-7da1-79de-b399-2c0f68b0a9ad", Release, InterfaceBuild)
 	end
-
-	repeat task.wait() until analytics ~= nil
-end
-
---print('Sirius Analytics are '..tostring(((cachedSettings and cachedSettings.System and cachedSettings.System.analytics and cachedSettings.System.analytics.Value or analytics)) and 'enabled.' or 'disabled.'))
-
-if cachedSettings and cachedSettings.System and cachedSettings.System.analytics and cachedSettings.System.analytics.Value and not useStudio then
-	local reporter = loadstring(game:HttpGet("https://analytics.sirius.menu/reporter"))()
-	reporter.report("0193dbf8-7da1-79de-b399-2c0f68b0a9ad", Release, InterfaceBuild)
 end
 
 local ReverseHubLibrary = {
@@ -643,7 +626,10 @@ local function ChangeTheme(Theme)
 	ReverseHub.Main.Topbar.ChangeSize.ImageColor3 = SelectedTheme.TextColor
 	ReverseHub.Main.Topbar.Hide.ImageColor3 = SelectedTheme.TextColor
 	ReverseHub.Main.Topbar.Search.ImageColor3 = SelectedTheme.TextColor
-	ReverseHub.Main.Topbar.Divider.BackgroundColor3 = SelectedTheme.ElementStroke
+	if Topbar:FindFirstChild('Settings') then
+		ReverseHub.Main.Topbar.Settings.ImageColor3 = SelectedTheme.TextColor
+		ReverseHub.Main.Topbar.Divider.BackgroundColor3 = SelectedTheme.ElementStroke
+	end
 
 	Main.Search.BackgroundColor3 = SelectedTheme.TextColor
 	Main.Search.Shadow.ImageColor3 = SelectedTheme.TextColor
@@ -1035,7 +1021,7 @@ local function Hide(notify: boolean?)
 		if useMobilePrompt then 
 			ReverseHubLibrary:Notify({Title = "Interface Hidden", Content = "The interface has been hidden, you can unhide the interface by tapping 'Show ReverseHub'.", Duration = 7, Image = 4400697855})
 		else
-			ReverseHubLibrary:Notify({Title = "Interface Hidden", Content = `The interface has been hidden, you can unhide the interface by tapping {settingsTable.General.rayfieldOpen.Value or 'K'}.`, Duration = 7, Image = 4400697855})
+			ReverseHubLibrary:Notify({Title = "Interface Hidden", Content = `The interface has been hidden, you can unhide the interface by tapping {settingsTable.General.ReverseHubOpen.Value or 'K'}.`, Duration = 7, Image = 4400697855})
 		end
 	end
 
@@ -1323,6 +1309,11 @@ local function updateSettings()
 	end)
 
 	if success then
+		if useStudio then
+			if script.Parent['get.val'] then
+				script.Parent['get.val'].Value = encoded
+			end
+		end
 		if writefile then
 			writefile(ReverseHubFolder..'/settings'..ConfigurationExtension, encoded)
 		end
@@ -1330,11 +1321,11 @@ local function updateSettings()
 end
 
 local function createSettings(window)
-	if not (writefile and isfile and readfile and isfolder and makefolder) then
+	if not (writefile and isfile and readfile and isfolder and makefolder) and not useStudio then
 		warn('Can\'t create settings as no file-saving functionality is available.')
 		return
 	end
-	
+
 	local newTab = window:CreateTab('ReverseHub Settings', 0, true)
 
 	if TabList['ReverseHub Settings'] then
@@ -1377,6 +1368,7 @@ local function createSettings(window)
 					Name = setting.Name,
 					CurrentKeybind = setting.Value,
 					HoldToInteract = false,
+					Ext = true,
 					CallOnChange = true,
 					Callback = function(Value)
 						setting.Value = Value
@@ -1389,6 +1381,7 @@ local function createSettings(window)
 
 	settingsCreated = true
 	loadSettings()
+	updateSettings()
 end
 
 
@@ -1802,7 +1795,7 @@ function ReverseHubLibrary:CreateWindow(Settings)
 		TabButton.Image.ImageTransparency = 1
 		TabButton.UIStroke.Transparency = 1
 
-		TabButton.Visible = true
+		TabButton.Visible = not Ext or false
 
 		-- Create Elements Page
 		local TabPage = Elements.Template:Clone()
@@ -1879,10 +1872,10 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					TweenService:Create(OtherTabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {Transparency = 0.5}):Play()
 				end
 			end
+
 			if Elements.UIPageLayout.CurrentPage ~= TabPage then
 				Elements.UIPageLayout:JumpTo(TabPage)
 			end
-
 		end)
 
 		local Tab = {}
@@ -1921,7 +1914,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 0.9}):Play()
 					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
 				else
-					SaveConfiguration()
+					if not ButtonSettings.Ext then
+						SaveConfiguration()
+					end
 					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
 					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
 					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 1}):Play()
@@ -2086,7 +2081,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
 				local r,g,b = math.floor((h*255)+0.5),math.floor((s*255)+0.5),math.floor((v*255)+0.5)
 				ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
-				SaveConfiguration()
+				if not ColorPickerSettings.Ext then
+					SaveConfiguration()
+				end
 			end)
 			--RGB
 			local function rgbBoxes(box,toChange)
@@ -2105,7 +2102,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				end
 				local r,g,b = math.floor((h*255)+0.5),math.floor((s*255)+0.5),math.floor((v*255)+0.5)
 				ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
-				SaveConfiguration()
+				if not ColorPickerSettings.Ext then
+					SaveConfiguration()
+				end
 			end
 			ColorPicker.RGB.RInput.InputBox.FocusLost:connect(function()
 				rgbBoxes(ColorPicker.RGB.RInput.InputBox,"R")
@@ -2138,7 +2137,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					ColorPicker.HexInput.InputBox.Text = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
 					pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
 					ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
-					SaveConfiguration()
+					if not ColorPickerSettings.Ext then
+						SaveConfiguration()
+					end
 				end
 				if sliderDragging then 
 					local localX = math.clamp(mouse.X-Slider.AbsolutePosition.X,0,Slider.AbsoluteSize.X)
@@ -2156,7 +2157,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					ColorPicker.HexInput.InputBox.Text = string.format("#%02X%02X%02X",color.R*0xFF,color.G*0xFF,color.B*0xFF)
 					pcall(function()ColorPickerSettings.Callback(Color3.fromHSV(h,s,v))end)
 					ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
-					SaveConfiguration()
+					if not ColorPickerSettings.Ext then
+						SaveConfiguration()
+					end
 				end
 			end)
 
@@ -2419,7 +2422,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					Input.InputFrame.InputBox.Text = ""
 				end
 
-				SaveConfiguration()
+				if not InputSettings.Ext then
+					SaveConfiguration()
+				end
 			end)
 
 			Input.MouseEnter:Connect(function()
@@ -2436,7 +2441,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 
 			function InputSettings:Set(text)
 				Input.InputFrame.InputBox.Text = text
-				SaveConfiguration()
+				if not InputSettings.Ext then
+					SaveConfiguration()
+				end
 			end
 
 			if Settings.ConfigurationSaving then
@@ -2666,7 +2673,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 							Dropdown.List.Visible = false
 						end
 						Debounce = false
-						SaveConfiguration()
+						if not DropdownSettings.Ext then
+							SaveConfiguration()
+						end
 					end)
 
 					ReverseHub.Main:GetPropertyChangedSignal('BackgroundColor3'):Connect(function()
@@ -2800,7 +2809,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				CheckingForKey = false
 				if Keybind.KeybindFrame.KeybindBox.Text == nil or "" then
 					Keybind.KeybindFrame.KeybindBox.Text = KeybindSettings.CurrentKeybind
-					SaveConfiguration()
+					if not KeybindSettings.Ext then
+						SaveConfiguration()
+					end
 				end
 			end)
 
@@ -2820,10 +2831,12 @@ function ReverseHubLibrary:CreateWindow(Settings)
 						Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeyNoEnum)
 						KeybindSettings.CurrentKeybind = tostring(NewKeyNoEnum)
 						Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
-						SaveConfiguration()
+						if not KeybindSettings.Ext then
+							SaveConfiguration()
+						end
 
 						if KeybindSettings.CallOnChange then
-							KeybindSettings.Callback(NewKeyNoEnum)
+							KeybindSettings.Callback(tostring(NewKeyNoEnum))
 						end
 					end
 				elseif not KeybindSettings.CallOnChange and KeybindSettings.CurrentKeybind ~= nil and (input.KeyCode == Enum.KeyCode[KeybindSettings.CurrentKeybind] and not processed) then -- Test
@@ -2873,7 +2886,13 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				Keybind.KeybindFrame.KeybindBox.Text = tostring(NewKeybind)
 				KeybindSettings.CurrentKeybind = tostring(NewKeybind)
 				Keybind.KeybindFrame.KeybindBox:ReleaseFocus()
-				SaveConfiguration()
+				if not KeybindSettings.Ext then
+					SaveConfiguration()
+				end
+
+				if KeybindSettings.CallOnChange then
+					KeybindSettings.Callback(tostring(NewKeybind))
+				end
 			end
 
 			if Settings.ConfigurationSaving then
@@ -3170,7 +3189,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 							end
 
 							SliderSettings.CurrentValue = NewValue
-							SaveConfiguration()
+							if not SliderSettings.Ext then
+								SaveConfiguration()
+							end
 						end
 					else
 						TweenService:Create(Slider.Main.Progress, TweenInfo.new(0.3, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Location - Slider.Main.AbsolutePosition.X > 5 and Location - Slider.Main.AbsolutePosition.X or 5, 1, 0)}):Play()
@@ -3202,7 +3223,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				end
 
 				SliderSettings.CurrentValue = NewVal
-				SaveConfiguration()
+				if not SliderSettings.Ext then
+					SaveConfiguration()
+				end
 			end
 
 			if Settings.ConfigurationSaving then
@@ -3261,6 +3284,9 @@ function ReverseHubLibrary:CreateWindow(Settings)
 	Topbar.CornerRepair.BackgroundTransparency = 1
 	Topbar.Title.TextTransparency = 1
 	Topbar.Search.ImageTransparency = 1
+	if Topbar:FindFirstChild('Settings') then
+		Topbar.Settings.ImageTransparency = 1
+	end
 	Topbar.ChangeSize.ImageTransparency = 1
 	Topbar.Hide.ImageTransparency = 1
 
@@ -3275,6 +3301,10 @@ function ReverseHubLibrary:CreateWindow(Settings)
 	task.wait(0.05)
 	TweenService:Create(Topbar.Search, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {ImageTransparency = 0.8}):Play()
 	task.wait(0.05)
+	if Topbar:FindFirstChild('Settings') then
+		TweenService:Create(Topbar.Settings, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {ImageTransparency = 0.8}):Play()
+		task.wait(0.05)
+	end
 	TweenService:Create(Topbar.ChangeSize, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {ImageTransparency = 0.8}):Play()
 	task.wait(0.05)
 	TweenService:Create(Topbar.Hide, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {ImageTransparency = 0.8}):Play()
@@ -3386,13 +3416,34 @@ Topbar.Search.MouseButton1Click:Connect(function()
 	end)
 end)
 
+if Topbar:FindFirstChild('Settings') then
+	Topbar.Settings.MouseButton1Click:Connect(function()
+		task.spawn(function()
+			for _, OtherTabButton in ipairs(TabList:GetChildren()) do
+				if OtherTabButton.Name ~= "Template" and OtherTabButton.ClassName == "Frame" and OtherTabButton ~= TabButton and OtherTabButton.Name ~= "Placeholder" then
+					TweenService:Create(OtherTabButton, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.TabBackground}):Play()
+					TweenService:Create(OtherTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextColor3 = SelectedTheme.TabTextColor}):Play()
+					TweenService:Create(OtherTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {ImageColor3 = SelectedTheme.TabTextColor}):Play()
+					TweenService:Create(OtherTabButton, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {BackgroundTransparency = 0.7}):Play()
+					TweenService:Create(OtherTabButton.Title, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {TextTransparency = 0.2}):Play()
+					TweenService:Create(OtherTabButton.Image, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {ImageTransparency = 0.2}):Play()
+					TweenService:Create(OtherTabButton.UIStroke, TweenInfo.new(0.7, Enum.EasingStyle.Exponential), {Transparency = 0.5}):Play()
+				end
+			end
+
+			Elements.UIPageLayout:JumpTo(Elements['ReverseHub Settings'])
+		end)
+	end)
+
+end
+
 
 Topbar.Hide.MouseButton1Click:Connect(function()
 	setVisibility(Hidden, not useMobileSizing)
 end)
 
 hideHotkeyConnection = UserInputService.InputBegan:Connect(function(input, processed)
-	if (input.KeyCode == Enum.KeyCode[settingsTable.General.rayfieldOpen.Value or 'K'] and not processed) then
+	if (input.KeyCode == Enum.KeyCode[settingsTable.General.ReverseHubOpen.Value or 'K'] and not processed) then
 		if Debounce then return end
 		if Hidden then
 			Hidden = false
@@ -3430,7 +3481,7 @@ function ReverseHubLibrary:LoadConfiguration()
 	local config
 
 	if useStudio then
-		config = [[{"Toggle1adwawd":"false","Keybind1":"Q","InputExample":"","Slider1dawd":120,"ColorPicfsefker1":{"B":255,"G":255,"R":255},"Slidefefsr1":80,"dawdawd":"","ColorPicker1awd":{"B":255,"G":255,"R":255},"Dropdown1":["Ocean"]}]]
+		config = [[{"Toggle1adwawd":true,"Keybind1":"B","InputExample":"","Slider1dawd":120,"ColorPicfsefker1":{"B":255,"G":255,"R":255},"Slidefefsr1":80,"dawdawd":"","ColorPicker1awd":{"B":255,"G":255,"R":255},"Dropdown1":["Ocean"]}]]
 	end
 
 	if CEnabled then
@@ -3472,7 +3523,7 @@ if useStudio then
 		LoadingTitle = "ReverseHub Interface Suite",
 		Theme = 'Default',
 		Icon = 0,
-		LoadingSubtitle = "by THEBOSSK1Y",
+		LoadingSubtitle = "by Sirius",
 		ConfigurationSaving = {
 			Enabled = true,
 			FolderName = nil, -- Create a custom folder for your hub/game
