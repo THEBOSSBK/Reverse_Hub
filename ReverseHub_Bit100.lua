@@ -54,4 +54,5 @@ If game.PlaceId 16732694052 then
        })
    --หน้าที่2
    local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
-else ReverseHub:Destroy()
+else ReverseHub:Destroy(),
+   print "Destory"
