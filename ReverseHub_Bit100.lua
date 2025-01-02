@@ -102,7 +102,7 @@ local Toggle2 = Tab:CreateToggle({
         if Value then
             pcall(function()
                 while _G.AutoShake do
-                    task.wait(0.01)
+                    task.wait(0.5)
                     local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
                     local shakeUI = PlayerGUI:FindFirstChild("shakeui")
                     if shakeUI and shakeUI.Enabled then
