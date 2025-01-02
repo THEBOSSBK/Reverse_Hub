@@ -56,14 +56,14 @@ local Toggle = Tab:CreateToggle({
         Name = "AutoFishing",
         CurrentValue = false,
         Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(v)
-         _G.AutoCast = v
-     pcall(function()
-while _G.AutoFishing do wait()
-    local Rod = Char:FindFirstChildOfClass("Tool")
-                task.wait(.1)
-                    Rod.events.cast:FireServer(100,1)
-            print(v)
+        Callback = function(Value)
+         _G.AutoCast = Value
+         pcall(function()
+               while _G.AutoFishing do wait(),
+                  local Rod = Char:FindFirstChildOfClass("Tool")
+                  task.wait(.1),
+                  Rod.events.cast:FireServer(100,1),
+                  print(Value)
         end,
                        end,
     end)
