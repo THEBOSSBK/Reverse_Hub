@@ -92,6 +92,35 @@ local Toggle = Tab:CreateToggle({
     end
 })
 
+-- หน้าที่ 1: AutoShake
+local Toggle2 = Tab:CreateToggle({
+    Name = "AutoShake",
+    CurrentValue = false,
+    Flag = "Toggle2",
+    Callback = function(Value)
+        _G.AutoShake = Value
+        if Value then
+            pcall(function()
+                while _G.AutoShake do
+                    task.wait(0.01)
+                    local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+                    local shakeUI = PlayerGUI:FindFirstChild("shakeui")
+                    if shakeUI and shakeUI.Enabled then
+                        local safezone = shakeUI:FindFirstChild("safezone")
+                        if safezone then
+                            local button = safezone:FindFirstChild("button")
+                            if button and button:IsA("ImageButton") and button.Visible then
+                                GuiService.SelectedObject = button
+                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+})
 
 
 
