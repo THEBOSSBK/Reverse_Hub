@@ -122,6 +122,33 @@ local Toggle2 = Tab:CreateToggle({
     end
 })
 
+local Toggle3 = Tab:CreateToggle({
+    Name = "AutoReel",
+    CurrentValue = false,
+    Flag = "ToggleReel",
+    Callback = function(Value)
+        _G.AutoReel = Value -- กำหนดค่าให้ _G.AutoReel
+
+        if Value then
+            spawn(function()
+                pcall(function()
+                    while _G.AutoReel do
+                        wait()
+                        for _, gui in pairs(LocalPlayer.PlayerGui:GetChildren()) do
+                            if gui:IsA("ScreenGui") and gui.Name == "reel" then
+                                if gui:FindFirstChild("bar") then
+                                    wait(0.15)
+                                    ReplicatedStorage.events.reelfinished:FireServer(100, true)
+                                end
+                            end
+                        end
+                    end
+                end)
+            end)
+        end
+    end
+})
+
 
 
    --หน้าที่2
