@@ -98,33 +98,30 @@ local Toggle2 = Tab:CreateToggle({
     CurrentValue = false,
     Flag = "AutoShake",
     Callback = function(Value)
-        _G.AutoShake = Value -- กำหนดค่าให้ _G.AutoShake
+        _G.AutoShake = Value
         if Value then
-            spawn(function()
-                pcall(function()
-                    while _G.AutoShake do
-                        wait(0.01) -- หน่วงเวลาเล็กน้อย
-                        local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-                        local shakeUI = PlayerGUI:FindFirstChild("shakeui") -- ตรวจสอบว่ามี UI ชื่อ "shakeui"
-                        if shakeUI and shakeUI.Enabled then
-                            local safezone = shakeUI:FindFirstChild("safezone") -- ตรวจสอบว่ามี safezone
-                            if safezone then
-                                local button = safezone:FindFirstChild("button") -- ตรวจสอบว่ามีปุ่ม "button"
-                                if button and button:IsA("ImageButton") and button.Visible then
-                                    if button.Name == "Shake" then -- ตรวจสอบว่าชื่อปุ่มเป็น "Shake"
-                                        GuiService.SelectedObject = button
-                                        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                                        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
-                                    end
-                                end
+            pcall(function()
+                while _G.AutoShake do
+                    task.wait(0.01)
+                    local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+                    local shakeUI = PlayerGUI:FindFirstChild("shakeui")
+                    if shakeUI and shakeUI.Enabled then
+                        local safezone = shakeUI:FindFirstChild("safezone")
+                        if safezone then
+                            local button = safezone:FindFirstChild("button")
+                            if button and button:IsA("ImageButton") and button.Visible then
+                                GuiService.SelectedObject = button
+                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
                             end
                         end
                     end
-                end)
+                end
             end)
         end
     end
 })
+
 
 
 local Toggle3 = Tab:CreateToggle({
