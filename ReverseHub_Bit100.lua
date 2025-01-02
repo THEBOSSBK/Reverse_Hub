@@ -53,20 +53,26 @@ end
 
 --หน้าที่1
 local Toggle = Tab:CreateToggle({
-        Name = "AutoFishing",
-        CurrentValue = false,
-        Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(Value)
-         _G.AutoCast = Value
-         pcall(function()
-               while _G.AutoFishing do wait(),
-                  local Rod = Char:FindFirstChildOfClass("Tool")
-                  task.wait(.1),
-                  Rod.events.cast:FireServer(100,1),
-                  print(Value)
-        end,
-                       end,
-    end)
-   end})
+    Name = "AutoFishing",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        _G.AutoFishing = Value -- กำหนดค่าให้ _G.AutoFishing
+        if Value then -- เริ่มทำงานถ้าค่าของ Value เป็น true
+            pcall(function()
+                while _G.AutoFishing do
+                    task.wait() -- เพิ่มการหน่วงเวลา
+                    local Rod = Char:FindFirstChildOfClass("Tool") -- ค้นหาเบ็ดตกปลา
+                    if Rod and Rod:FindFirstChild("events") then
+                        Rod.events.cast:FireServer(100, 1) -- ใช้งาน cast
+                    else
+                        print("ไม่มีเบ็ดตกปลาหรือ events ไม่ถูกต้อง")
+                    end
+                end
+            end)
+        end
+    end
+})
+
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
