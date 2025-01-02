@@ -1,3 +1,4 @@
+--Gui
 local ReverseHub = loadstring(game:HttpGet('https://raw.githubusercontent.com/THEBOSSBK/Reverse_Hub/refs/heads/main/Gui_editor_KuyliIsus.lua'))()
 local Window = ReverseHub:CreateWindow({
    Name = "ReverseHub_Fisch",
@@ -42,14 +43,30 @@ local Humanoid = Char.Humanoid
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GuiService = game:GetService("GuiService")
+
+equipitem = function(Value)
+if LocalPlayer.Backpack:FindFirstChild(Value) then
+    local a = LocalPlayer.Backpack:FindFirstChild(Value)
+        Humanoid:EquipTool(a)
+    end
+end
+
 --หน้าที่1
 local Toggle = Tab:CreateToggle({
         Name = "AutoFishing",
         CurrentValue = false,
         Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Value)
+         _G.AutoCast = Value
+     pcall(function()
+while _G.AutoFishing do wait()
+    local Rod = Char:FindFirstChildOfClass("Tool")
+                task.wait(.1)
+                    Rod.events.cast:FireServer(100,1)
             print(Value)
         end,
-    })
+                       end,
+    end)
+   end})
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
