@@ -43,7 +43,6 @@ local Humanoid = Char.Humanoid
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GuiService = game:GetService("GuiService")
-local AutoShake_Speed = 1
 
 equipitem = function(v)
 if LocalPlayer.Backpack:FindFirstChild(v) then
@@ -127,8 +126,8 @@ local Input = Tab:CreateInput({
    Name = "AutoShake_Speed",
    PlaceholderText = "0-1",
    RemoveTextAfterFocusLost = true,
-   Callback = function(tonumber)
-        AutoShake_Speed = (tonumber)
+   Callback = function(Text)
+        AutoShake_Speed = (Text)
       end       
    end,
 })
