@@ -55,47 +55,44 @@ end
 local Toggle = Tab:CreateToggle({
     Name = "AutoFishing",
     CurrentValue = false,
-    Flag = "AutoFishing",
+    Flag = "Toggle1",
     Callback = function(Value)
-        _G.AutoFishing = Value
-        _G.AutoShake = Value
+        _G.AutoFishing = Value -- กำหนดค่าให้ _G.AutoFishing
 
-        -- AutoFishing
         if Value then
-            pcall(function()
+            -- Spawn สำหรับการสวมใส่เบ็ดตกปลาอัตโนมัติ
+            spawn(function()
                 while _G.AutoFishing do
-                    task.wait()
-                    local Rod = Char:FindFirstChildOfClass("Tool")
-                    if Rod and Rod:FindFirstChild("events") then
-                        Rod.events.cast:FireServer(100, 1)
-                    end
-                end
-            end)
-        end
-
-        -- AutoShake
-        if Value then
-            pcall(function()
-                while _G.AutoShake do
-                    task.wait(0.01)
-                    local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-                    local shakeUI = PlayerGUI:FindFirstChild("shakeui")
-                    if shakeUI and shakeUI.Enabled then
-                        local safezone = shakeUI:FindFirstChild("safezone")
-                        if safezone then
-                            local button = safezone:FindFirstChild("button")
-                            if button and button:IsA("ImageButton") and button.Visible then
-                                GuiService.SelectedObject = button
-                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
-                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                    wait()
+                    pcall(function()
+                        for i, v in pairs(LocalPlayer.Backpack:GetChildren()) do
+                            if v:IsA("Tool") and v.Name:lower():find("rod") then
+                                equipitem(v.Name)
                             end
                         end
-                    end
+                    end)
                 end
+            end)
+
+            -- Spawn สำหรับการตกปลา
+            spawn(function()
+                pcall(function()
+                    while _G.AutoFishing do
+                        task.wait()
+                        local Rod = Char:FindFirstChildOfClass("Tool") -- ค้นหาเบ็ดตกปลา
+                        if Rod and Rod:FindFirstChild("events") then
+                            Rod.events.cast:FireServer(100, 1) -- ใช้งาน cast
+                        else
+                            print("ไม่มีเบ็ดตกปลาหรือ events ไม่ถูกต้อง")
+                        end
+                    end
+                end)
             end)
         end
     end
 })
+
+
 
 
    --หน้าที่2
