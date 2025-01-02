@@ -55,24 +55,48 @@ end
 local Toggle = Tab:CreateToggle({
     Name = "AutoFishing",
     CurrentValue = false,
-    Flag = "Toggle1",
+    Flag = "AutoFishing",
     Callback = function(Value)
-        _G.AutoFishing = Value -- กำหนดค่าให้ _G.AutoFishing
-        if Value then -- เริ่มทำงานถ้าค่าของ Value เป็น true
+        _G.AutoFishing = Value
+        _G.AutoShake = Value
+
+        -- AutoFishing
+        if Value then
             pcall(function()
                 while _G.AutoFishing do
-                    task.wait() -- เพิ่มการหน่วงเวลา
-                    local Rod = Char:FindFirstChildOfClass("Tool") -- ค้นหาเบ็ดตกปลา
+                    task.wait()
+                    local Rod = Char:FindFirstChildOfClass("Tool")
                     if Rod and Rod:FindFirstChild("events") then
-                        Rod.events.cast:FireServer(100, 1) -- ใช้งาน cast
-                    else
-                        print("ไม่มีเบ็ดตกปลาหรือ events ไม่ถูกต้อง")
+                        Rod.events.cast:FireServer(100, 1)
+                    end
+                end
+            end)
+        end
+
+        -- AutoShake
+        if Value then
+            pcall(function()
+                while _G.AutoShake do
+                    task.wait(0.01)
+                    local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+                    local shakeUI = PlayerGUI:FindFirstChild("shakeui")
+                    if shakeUI and shakeUI.Enabled then
+                        local safezone = shakeUI:FindFirstChild("safezone")
+                        if safezone then
+                            local button = safezone:FindFirstChild("button")
+                            if button and button:IsA("ImageButton") and button.Visible then
+                                GuiService.SelectedObject = button
+                                VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game)
+                                VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game)
+                            end
+                        end
                     end
                 end
             end)
         end
     end
 })
+
 
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
