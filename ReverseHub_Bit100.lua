@@ -44,9 +44,9 @@ local VirtualInputManager = game:GetService("VirtualInputManager")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GuiService = game:GetService("GuiService")
 
-equipitem = function(Value)
-if LocalPlayer.Backpack:FindFirstChild(Value) then
-    local a = LocalPlayer.Backpack:FindFirstChild(Value)
+equipitem = function(v)
+if LocalPlayer.Backpack:FindFirstChild(v) then
+    local a = LocalPlayer.Backpack:FindFirstChild(v)
         Humanoid:EquipTool(a)
     end
 end
@@ -56,14 +56,14 @@ local Toggle = Tab:CreateToggle({
         Name = "AutoFishing",
         CurrentValue = false,
         Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-        Callback = function(Value)
-         _G.AutoCast = Value
+        Callback = function(v)
+         _G.AutoCast = v
      pcall(function()
 while _G.AutoFishing do wait()
     local Rod = Char:FindFirstChildOfClass("Tool")
                 task.wait(.1)
                     Rod.events.cast:FireServer(100,1)
-            print(Value)
+            print(v)
         end,
                        end,
     end)
