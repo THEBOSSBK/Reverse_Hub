@@ -176,7 +176,8 @@ local ToggleOxygen = Tab1:CreateToggle({
                         -- ลบ temperature
                         if client:FindFirstChild("temperature") then
                             client.temperature:Destroy()
-                        else
+                        end
+                     else
                     end
                 end
             end)
