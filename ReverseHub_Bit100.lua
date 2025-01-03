@@ -78,7 +78,7 @@ local Toggle = Tab:CreateToggle({
             spawn(function()
                 pcall(function()
                     while _G.AutoFishing do
-                        task.wait()
+                        task.wait(1)
                         local Rod = Char:FindFirstChildOfClass("Tool") -- ค้นหาเบ็ดตกปลา
                         if Rod and Rod:FindFirstChild("events") then
                             Rod.events.cast:FireServer(100, 1) -- ใช้งาน cast
@@ -101,7 +101,7 @@ local Toggle2 = Tab:CreateToggle({
         if Value then
             pcall(function()
                 while _G.AutoShake do
-                    task.wait()
+                    task.wait(0.10)
                     local PlayerGUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
                     local shakeUI = PlayerGUI:FindFirstChild("shakeui")
                     if shakeUI and shakeUI.Enabled then
