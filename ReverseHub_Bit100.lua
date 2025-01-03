@@ -173,12 +173,6 @@ local ToggleOxygen = Tab1:CreateToggle({
                 -- ลบ temperature
                 if client:FindFirstChild("temperature") then
                     client.temperature:Destroy()
-                  ReverseHubROxy:Notify()
-                  Title = "ReverseHub",
-					   Content = "Remove Oxygen Completed",
-					   Duration = 7,
-				   	Image = 4370033185,
-               })
                end
             else
             end
