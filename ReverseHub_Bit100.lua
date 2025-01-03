@@ -152,7 +152,7 @@ local Toggle3 = Tab:CreateToggle({
 
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
-local ToggleOxygen = Tab:CreateToggle({
+local ToggleOxygen = Tab1:CreateToggle({
     Name = "Remove Oxygen",
     CurrentValue = false,
     Flag = "ToggleOxygen",
@@ -172,6 +172,10 @@ local ToggleOxygen = Tab:CreateToggle({
                         -- ลบ oxygen(peaks)
                         if client:FindFirstChild("oxygen(peaks)") then
                             client["oxygen(peaks)"]:Destroy()
+                        end
+                        -- ลบอุณหภูมิ
+                        if client:FindFirstChild("temperature") then
+                           client.temperature:Destroy()
                         end
                      else
                     end
