@@ -159,31 +159,27 @@ local ToggleOxygen = Tab1:CreateToggle({
     Callback = function(Value)
         _G.RemoveOxygen = Value -- กำหนดค่าให้ _G.RemoveOxygen
         if Value then
-            spawn(function()
-                while _G.RemoveOxygen do
-                    wait(1) -- หน่วงเวลาเล็กน้อย
-                    local player = game:GetService("Players").LocalPlayer
-                    local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
-                    if client then
-                        -- ลบ oxygen
-                        if client:FindFirstChild("oxygen") then
-                            client.oxygen:Destroy()
-                        end
-                        -- ลบ oxygen(peaks)
-                        if client:FindFirstChild("oxygen(peaks)") then
-                            client["oxygen(peaks)"]:Destroy()
-                        end
-                        -- ลบอุณหภูมิ
-                        if client:FindFirstChild("temperature") then
-                           client.temperature:Destroy()
-                        end
-                     else
-                    end
+            local player = game:GetService("Players").LocalPlayer
+            local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
+            if client then
+                -- ลบ oxygen
+                if client:FindFirstChild("oxygen") then
+                    client.oxygen:Destroy()
                 end
-            end)
+                -- ลบ oxygen(peaks)
+                if client:FindFirstChild("oxygen(peaks)") then
+                    client["oxygen(peaks)"]:Destroy()
+                end
+                -- ลบ temperature
+                if client:FindFirstChild("temperature") then
+                    client.temperature:Destroy()
+               end
+            else
+            end
         end
     end,
 })
+
 
 
 
