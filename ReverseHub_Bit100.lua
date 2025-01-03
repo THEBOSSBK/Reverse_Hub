@@ -152,7 +152,7 @@ local Toggle3 = Tab:CreateToggle({
 
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
-local ToggleOxygen = Tab1:CreateToggle({
+local ToggleOxygen = Tab:CreateToggle({
     Name = "Remove Oxygen",
     CurrentValue = false,
     Flag = "ToggleOxygen",
@@ -164,16 +164,22 @@ local ToggleOxygen = Tab1:CreateToggle({
                     wait(1) -- หน่วงเวลาเล็กน้อย
                     local player = game:GetService("Players").LocalPlayer
                     local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
-                    if client and client:FindFirstChild("oxygen") then
-                        client.oxygen:Destroy() -- ลบ oxygen
-                        print("Oxygen ถูกลบ")
-                    else
-                        print("ไม่พบ object oxygen ใน client")
+                    if client then
+                        -- ลบ oxygen
+                        if client:FindFirstChild("oxygen") then
+                            client.oxygen:Destroy()
+                        end
+                        -- ลบ oxygen(peaks)
+                        if client:FindFirstChild("oxygen(peaks)") then
+                            client["oxygen(peaks)"]:Destroy()
+                        end
+                     else
                     end
                 end
             end)
         end
     end,
 })
+
 
 
