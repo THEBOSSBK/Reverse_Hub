@@ -161,7 +161,7 @@ local ToggleOxygen = Tab1:CreateToggle({
         if Value then
             spawn(function()
                 while _G.RemoveOxygen do
-                    wait(100) -- หน่วงเวลาเล็กน้อย
+                    wait(5) -- หน่วงเวลาเล็กน้อย
                     local player = game:GetService("Players").LocalPlayer
                     local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
                     if client then
