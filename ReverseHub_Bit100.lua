@@ -78,7 +78,7 @@ local Toggle = Tab:CreateToggle({
             spawn(function()
                 pcall(function()
                     while _G.AutoFishing do
-                        task.wait(1)
+                        task.wait(1.5)
                         local Rod = Char:FindFirstChildOfClass("Tool") -- ค้นหาเบ็ดตกปลา
                         if Rod and Rod:FindFirstChild("events") then
                             Rod.events.cast:FireServer(100, 1) -- ใช้งาน cast
