@@ -36,6 +36,7 @@ local Window = ReverseHub:CreateWindow({
 
 ------------แมพตกปลาfish
 local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
+local Label = Tab:CreateLabel("Auto fishing", "rewind")
 local Player = game:GetService("Players")
 local LocalPlayer = Player.LocalPlayer
 local Char = LocalPlayer.Character
@@ -152,6 +153,7 @@ local Toggle3 = Tab:CreateToggle({
 
    --หน้าที่2
 local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
+local Label = Tab1:CreateLabel("Remove Oxygen", "rewind")
 local ToggleOxygen = Tab1:CreateToggle({
     Name = "Remove Oxygen",
     CurrentValue = false,
