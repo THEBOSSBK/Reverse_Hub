@@ -156,30 +156,27 @@ local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
    Name = "Select Island",
-   Options = {"None", "Ancient Isle", "Archeological Site", "Birch Cay", "Desolate Deep", "Earmark Island", "Forsaken Shore", "Haddock Rock", "Harvesters Spike", "Moosewood", "Mushgrove Swamp", "Northern Expedition", "Roslit Bay", "Snowcap Island", "Statue of Sovereignty", "Sunstone Island", "Terrapin Island", "The Arch", "Vertigo"},
+   Options = {"None", "Moosewood", "Ancient Isle"},
    CurrentOption = "None",
    MultipleOptions = false,
    Callback = function(Option)
-        local player = game.Players.LocalPlayer
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            if Option == "Moosewood" then
-                player.Character.HumanoidRootPart.CFrame = CFrame.new(
-                    390.634888, 134.579941, 243.806595, 
-                    -0.0378184356, 4.58910492e-08, 0.999284625, 
-                    3.64827807e-10, 1, -4.59100917e-08, 
-                    -0.999284625, -1.3716811e-09, -0.0378184356
-                )
-                print("ผู้เล่นถูกวาร์ปไปยัง Moosewood")
-            else
-                --??
-            end
-        else
-            print("ไม่พบ HumanoidRootPart หรือ Character ของผู้เล่น")
-        end
+       if Option then
+           local player = game:GetService("Players").LocalPlayer
+           if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+               if Option == "Moosewood" then
+                   player.Character.HumanoidRootPart.CFrame = CFrame.new(390.634888, 134.579941, 243.806595)
+                   print("วาร์ปไปยัง Moosewood")
+               else
+                   print("เลือกเกาะ: " .. Option)
+               end
+           else
+               print("ไม่พบ Character หรือ HumanoidRootPart")
+           end
+       else
+           print("Option เป็น nil")
+       end
    end
 })
-
-
 
 
   --หน้าที่3
