@@ -152,7 +152,7 @@ local Toggle3 = Tab:CreateToggle({
 
 
    --หน้าที่2
-local Tab1 = Window:CreateTab("ผู้เล่น", "user-2")
+local Tab1 = Window:CreateTab("ผู้เล่น", "plane")
 local Label = Tab1:CreateLabel("Remove Oxygen", "droplets")
 
 
