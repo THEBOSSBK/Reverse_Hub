@@ -35,7 +35,7 @@ local Window = ReverseHub:CreateWindow({
 })
 
 ------------แมพตกปลาfish
-local Tab = Window:CreateTab("หน้าหลัก", 4483362458) -- Title, Image
+local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
 local Label = Tab:CreateLabel("Auto fishing", "crown")
 local Player = game:GetService("Players")
 local LocalPlayer = Player.LocalPlayer
