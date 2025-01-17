@@ -154,6 +154,16 @@ local Toggle3 = Tab:CreateToggle({
    --หน้าที่2
 local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
+local Dropdown = Tab2:CreateDropdown({
+   Name = "Select Area",
+   Options = {"Starter World","Pirate Island","Pineapple Paradise"},
+   CurrentOption = {"Starter World"},
+   MultipleOptions = false,
+   Flag = "dropdownarea", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Option)
+        print(Option)
+   end,
+})
 
 
   --หน้าที่3
