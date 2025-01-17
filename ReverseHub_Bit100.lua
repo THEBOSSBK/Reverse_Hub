@@ -159,7 +159,6 @@ local Dropdown = Tab2:CreateDropdown({
    Options = {"None","Ancient Isle","Archeological Site","Birch Cay","Desolate Deep","Earmark Island","Forsaken Shore","Haddock Rock","Harvesters Spike","Moosewood","Mushgrove Swamp","Northern Expedition","Roslit Bay","Snowcap Island","Statue of Sovereignty","Sunstone Island","Terrapin Island","The Arch","Vertigo"},
    CurrentOption = {"None"},
    MultipleOptions = false,
-   Flag = "dropdownarea", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Option)
         print(Option)
    end,
