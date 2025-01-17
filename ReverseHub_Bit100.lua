@@ -5,7 +5,7 @@ local Window = ReverseHub:CreateWindow({
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Loading...",
    LoadingSubtitle = "by THEBOSS_K1Y",
-   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+   Theme = "Green", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = true, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
