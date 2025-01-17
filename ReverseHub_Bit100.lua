@@ -167,7 +167,7 @@ local Dropdown = Tab2:CreateDropdown({
                    player.Character.HumanoidRootPart.CFrame = CFrame.new(390.634888, 134.579941, 243.806595)
                    print("วาร์ปไปยัง Moosewood")
                else
-                   print("เลือกเกาะ: " .. Option)
+                   print("เลือกเกาะ: ")
                end
            else
                print("ไม่พบ Character หรือ HumanoidRootPart")
