@@ -161,19 +161,10 @@ local Dropdown = Tab2:CreateDropdown({
    MultipleOptions = false,
    Callback = function(Option)
         if Option == "Moosewood" then
-            local player = game:GetService("Players").LocalPlayer
-            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                player.Character.HumanoidRootPart.CFrame = CFrame.new(
-                    384.00119, 134.000031, 228.162277, 
-                    -0.0660171658, -5.48803207e-08, 0.99781847, 
-                    -6.97687454e-08, 1, 5.03842976e-08, 
-                    -0.99781847, -6.6290319e-08, -0.0660171658
-                )
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new()
                 print("ผู้เล่นถูกวาร์ปไปยัง Moosewood")
-            end
-        end
-   end,
-})
+         end
+      })
 
 
 
