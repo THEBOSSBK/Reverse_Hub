@@ -171,7 +171,7 @@ local Dropdown = Tab2:CreateDropdown({
                 )
                 print("ผู้เล่นถูกวาร์ปไปยัง Moosewood")
             else
-                print("เลือกเกาะ: " .. Option)
+                --??
             end
         else
             print("ไม่พบ HumanoidRootPart หรือ Character ของผู้เล่น")
