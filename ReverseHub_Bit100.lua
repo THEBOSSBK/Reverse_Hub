@@ -156,13 +156,25 @@ local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
    Name = "Select Island",
-   Options = {"None","Ancient Isle","Archeological Site","Birch Cay","Desolate Deep","Earmark Island","Forsaken Shore","Haddock Rock","Harvesters Spike","Moosewood","Mushgrove Swamp","Northern Expedition","Roslit Bay","Snowcap Island","Statue of Sovereignty","Sunstone Island","Terrapin Island","The Arch","Vertigo"},
-   CurrentOption = {"None"},
+   Options = {"None", "Ancient Isle", "Archeological Site", "Birch Cay", "Desolate Deep", "Earmark Island", "Forsaken Shore", "Haddock Rock", "Harvesters Spike", "Moosewood", "Mushgrove Swamp", "Northern Expedition", "Roslit Bay", "Snowcap Island", "Statue of Sovereignty", "Sunstone Island", "Terrapin Island", "The Arch", "Vertigo"},
+   CurrentOption = "None",
    MultipleOptions = false,
    Callback = function(Option)
-        print(Option)
+        if Option == "Moosewood" then
+            local player = game:GetService("Players").LocalPlayer
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                player.Character.HumanoidRootPart.CFrame = CFrame.new(
+                    384.00119, 134.000031, 228.162277, 
+                    -0.0660171658, -5.48803207e-08, 0.99781847, 
+                    -6.97687454e-08, 1, 5.03842976e-08, 
+                    -0.99781847, -6.6290319e-08, -0.0660171658
+                )
+                print("ผู้เล่นถูกวาร์ปไปยัง Moosewood")
+            end
+        end
    end,
 })
+
 
 
   --หน้าที่3
