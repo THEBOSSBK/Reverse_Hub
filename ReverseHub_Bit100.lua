@@ -149,6 +149,16 @@ local Toggle3 = Tab:CreateToggle({
     end
 })
 
+--ตัวแปรการวาป
+getgenv().SelectedOption = nil
+
+function doStuff() 
+   If getgenv().SelectedOption = "Ancient Isle" then 
+      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame CFrame.new(0,5,0)
+   elseif getgenv().SelectedOption == "Bannana" then 
+      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame CFrame.new(0,10,0)
+   end
+end
 
 
    --หน้าที่2
@@ -160,10 +170,9 @@ local Dropdown = Tab2:CreateDropdown({
    CurrentOption = "None",
    MultipleOptions = false,
    Callback = function(Option)
-        if Option == "Moosewood" then
-            player.Character.HumanoidRootPart.CFrame = CFrame.new(384.00119, 134.000031, 228.162277, -0.0660171658, -5.48803207e-08, 0.99781847, -6.97687454e-08, 1, 5.03842976e-08, -0.99781847, -6.6290319e-08, -0.0660171658),
-            print("ผู้เล่นถูกวาร์ปไปยัง Moosewood")
-         end
+               getgenv().SelectedOption = Option 
+               doStuff()
+            end,
       })
 
 
