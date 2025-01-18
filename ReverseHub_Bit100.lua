@@ -239,54 +239,20 @@ local Button1 = Tab3:CreateButton({
             -- ลบ oxygen
             if client:FindFirstChild("oxygen") then
                 client.oxygen:Destroy()
-                print("oxygen ถูกลบ")
             end
             -- ลบ oxygen(peaks)
             if client:FindFirstChild("oxygen(peaks)") then
                 client["oxygen(peaks)"]:Destroy()
-                print("oxygen(peaks) ถูกลบ")
             end
             -- ลบ temperature
             if client:FindFirstChild("temperature") then
                 client.temperature:Destroy()
-                print("temperature ถูกลบ")
             end
          else
         end
     end,
 })
 
-local ToggleOxygen = Tab3:CreateToggle({
-    Name = "Remove Oxygen",
-    CurrentValue = false,
-    Flag = "RemoveOxygen",
-    Callback = function(Value)
-        _G.RemoveOxygen = Value -- กำหนดค่าให้ _G.RemoveOxygen
-        if Value then
-            spawn(function()
-                while _G.RemoveOxygen do
-                    wait(5) -- หน่วงเวลาเล็กน้อย
-                    local player = game:GetService("Players").LocalPlayer
-                    local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
-                    if client then
-                        -- ลบ oxygen
-                        if client:FindFirstChild("oxygen") then
-                            client.oxygen:Destroy()
-                        end
-                        -- ลบ oxygen(peaks)
-                        if client:FindFirstChild("oxygen(peaks)") then
-                            client["oxygen(peaks)"]:Destroy()
-                        end
-                        -- ลบ temperature
-                        if client:FindFirstChild("temperature") then
-                            client.temperature:Destroy()
-                        end
-                     else
-                    end
-                end
-            end)
-        end
-    end,
-})
+
 
 
