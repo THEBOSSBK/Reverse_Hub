@@ -225,7 +225,7 @@ function doStuff()
         ["Cryogenic_Canal"] = CFrame.new(),
         ["Frigid_Cavern"] = CFrame.new(),
         ["Glacial_Grotto"] = CFrame.new(),
-        ["Overgrowth_Caves"] = CFrame.new(),
+        ["Overgrowth_Caves"] = CFrame.new(20296.4844, 271.444427, 5507.83496, -0.684153795, -2.40581546e-08, 0.729337752, -6.45078373e-08, 1, -2.75251466e-08, -0.729337752, -6.58794406e-08, -0.684153795),
         ["_"] = CFrame.new(),
     }
 
