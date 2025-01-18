@@ -150,7 +150,20 @@ local Toggle3 = Tab:CreateToggle({
 })
 
 --ตัวแปรการวาป
+getgenv().SelectedOption = nil
 
+function doStuff()
+    if getgenv().SelectedOption == "Ancient Isle" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
+    elseif getgenv().SelectedOption == "Bannana" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
+    else
+        print("Option ไม่มีผลลัพธ์")
+        print(SelectedOption)
+
+
+    end
+end
 
 -- หน้าที่ 2
 local Tab2 = Window:CreateTab("Teleport", "plane")
@@ -162,14 +175,8 @@ local Dropdown = Tab2:CreateDropdown({
     MultipleOptions = false,
     Flag = "Teleport_Island",
     Callback = function(Option)
-         print(Option)
-        if Option == "Ancient_Isle" then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
-        elseif Option == "Archeological_Site" then
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
-        else
-            print("ไม่มีการวาร์ปสำหรับตัวเลือกนี้")
-        end
+        getgenv().SelectedOption = Option
+        doStuff()
     end,
 })
 
