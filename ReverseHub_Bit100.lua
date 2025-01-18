@@ -173,6 +173,7 @@ local Dropdown = Tab2:CreateDropdown({
     Callback = function(Option)
         getgenv().SelectedOption = Option
         doStuff()
+        print(Option)
     end,
 })
 
