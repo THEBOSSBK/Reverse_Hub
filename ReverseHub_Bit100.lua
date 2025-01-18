@@ -152,28 +152,30 @@ local Toggle3 = Tab:CreateToggle({
 --ตัวแปรการวาป
 getgenv().SelectedOption = nil
 
-function doStuff() 
-   If getgenv().SelectedOption = "Ancient Isle" then 
-      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame CFrame.new(0,5,0)
-   elseif getgenv().SelectedOption == "Bannana" then 
-      game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame CFrame.new(0,10,0)
-   end
+function doStuff()
+    if getgenv().SelectedOption == "Ancient Isle" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
+    elseif getgenv().SelectedOption == "Bannana" then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
+    else
+        print("Option ไม่มีผลลัพธ์")
+    end
 end
 
-
-   --หน้าที่2
+-- หน้าที่ 2
 local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
-   Name = "Select Island",
-   Options = {"None", "Ancient Isle", "Archeological Site", "Birch Cay", "Desolate Deep", "Earmark Island", "Forsaken Shore", "Haddock Rock", "Harvesters Spike", "Moosewood", "Mushgrove Swamp", "Northern Expedition", "Roslit Bay", "Snowcap Island", "Statue of Sovereignty", "Sunstone Island", "Terrapin Island", "The Arch", "Vertigo"},
-   CurrentOption = "None",
-   MultipleOptions = false,
-   Callback = function(Option)
-               getgenv().SelectedOption = Option 
-               doStuff()
-            end,
-      })
+    Name = "Select Island",
+    Options = {"None", "Ancient Isle", "Archeological Site", "Birch Cay", "Desolate Deep", "Earmark Island", "Forsaken Shore", "Haddock Rock", "Harvesters Spike", "Moosewood", "Mushgrove Swamp", "Northern Expedition", "Roslit Bay", "Snowcap Island", "Statue of Sovereignty", "Sunstone Island", "Terrapin Island", "The Arch", "Vertigo"},
+    CurrentOption = "None",
+    MultipleOptions = false,
+    Callback = function(Option)
+        getgenv().SelectedOption = Option
+        doStuff()
+    end,
+})
+
 
 
 
