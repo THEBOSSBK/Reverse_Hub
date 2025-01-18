@@ -153,7 +153,7 @@ local Toggle3 = Tab:CreateToggle({
 getgenv().SelectedOption = nil
 
 function doStuff()
-    if getgenv().SelectedOption == "Ancient Isle" then
+    if getgenv().SelectedOption == "Ancient_Isle" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
     elseif getgenv().SelectedOption == "Bannana" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
@@ -167,7 +167,7 @@ local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
     Name = "Select Island",
-    Options = {"None", "Ancient Isle", "Archeological Site", "Birch Cay", "Desolate Deep", "Earmark Island", "Forsaken Shore", "Haddock Rock", "Harvesters Spike", "Moosewood", "Mushgrove Swamp", "Northern Expedition", "Roslit Bay", "Snowcap Island", "Statue of Sovereignty", "Sunstone Island", "Terrapin Island", "The Arch", "Vertigo"},
+    Options = {"None", "Ancient_Isle", "Archeological_Site", "Birch_Cay", "Desolate_Deep", "Earmark_Island", "Forsaken_Shore", "Haddock_Rock", "Harvesters_Spike", "Moosewood", "Mushgrove_Swamp", "Northern_Expedition", "Roslit_Bay", "Snowcap_Island", "Statue_of_Sovereignty", "Sunstone_Island", "Terrapin_Island", "The_Arch", "Vertigo"},
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
