@@ -211,22 +211,44 @@ end,
 })
 
 --Northern_Expedition
+
+getgenv().SelectedOption2 = nil
+
+function doStuff()
+    local locations2 = {
+        ["None"] = nil,
+        ["Ancient_Archives"] = CFrame.new(),
+        ["The_Depths"] = CFrame.new(),
+        ["Vertigo"] = CFrame.new(),
+    }
+
+    local selectedCFrame2 = locations2[getgenv().SelectedOption2]
+
+    if selectedCFrame2 then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = selectedCFrame2
+        print("ผู้เล่นถูกวาร์ปไปยัง: " .. getgenv().SelectedOption2)
+    else
+        print("Option ไม่มีผลลัพธ์ หรือไม่มีการกำหนดค่า: " .. tostring(getgenv().SelectedOption2))
+    end
+end
+
+
 local Paragraph = Tab2:CreateParagraph({Title = "Teleport Northern_Expedition", Content = "Teleport in Northern_Expedition Only"})
 local Dropdown2 = Tab2:CreateDropdown({
     Name = "Select a location",
-    Options = {"None","Northern_Summit","Cryogenic_Canal","Frigid_Cavern","Glacial Grotto","Overgrowth_Caves"},
+    Options = {"None","Northern_Summit","camp1","camp2","camp3","Cryogenic_Canal","Frigid_Cavern","Glacial Grotto","Overgrowth_Caves"},
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
     if type(Option) == "table" then -- ตรวจสอบว่า Option เป็น table หรือไม่
         for _, value in pairs(Option) do -- วนลูปผ่านค่าภายใน table
             print(value) -- แสดงค่าของแต่ละรายการใน table
-            getgenv().SelectedOption = value -- กำหนดค่าให้ SelectedOption
+            getgenv().SelectedOption2 = value -- กำหนดค่าให้ SelectedOption
             doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
         end
     else
         print(Option) -- แสดงค่าถ้า Option เป็น string
-        getgenv().SelectedOption = Option -- กำหนดค่าให้ SelectedOption
+        getgenv().SelectedOption2 = Option -- กำหนดค่าให้ SelectedOption
         doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
     end
 end,
