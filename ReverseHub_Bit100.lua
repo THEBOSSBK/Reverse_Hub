@@ -217,9 +217,9 @@ getgenv().SelectedOption2 = nil
 function doStuff()
     local locations2 = {
         ["None"] = nil,
-        ["Ancient_Archives"] = CFrame.new(),
-        ["The_Depths"] = CFrame.new(),
-        ["Vertigo"] = CFrame.new(),
+        ["Northern_Summit"] = CFrame.new(19610.2148, 132.682495, 5288.0083, 0.256980151, 1.57342335e-08, -0.966416657, -6.76295686e-10, 1, 1.61011684e-08, 0.966416657, -3.48409745e-09, 0.256980151),
+        ["camp1"] = CFrame.new(19654.8438, 140.920105, 5302.79639, 0.917426646, -5.15326555e-08, -0.397904903, 6.67313671e-08, 1, 2.43487275e-08, 0.397904903, -4.88909109e-08, 0.917426646),
+        ["camp2"] = CFrame.new(20201.4648, 208.491318, 5309.35986, 0.976066351, -4.14286632e-08, -0.217472896, 4.45739197e-08, 1, 9.557243e-09, 0.217472896, -1.90221225e-08, 0.976066351),
     }
 
     local selectedCFrame2 = locations2[getgenv().SelectedOption2]
