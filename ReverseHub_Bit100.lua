@@ -161,6 +161,7 @@ local Dropdown = Tab2:CreateDropdown({
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
+         print(Option)
         if Option == "Ancient_Isle" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
         elseif Option == "Archeological_Site" then
