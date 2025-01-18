@@ -218,8 +218,15 @@ function doStuff()
     local locations2 = {
         ["None"] = nil,
         ["Northern_Summit"] = CFrame.new(19610.2148, 132.682495, 5288.0083, 0.256980151, 1.57342335e-08, -0.966416657, -6.76295686e-10, 1, 1.61011684e-08, 0.966416657, -3.48409745e-09, 0.256980151),
-        ["camp1"] = CFrame.new(19654.8438, 140.920105, 5302.79639, 0.917426646, -5.15326555e-08, -0.397904903, 6.67313671e-08, 1, 2.43487275e-08, 0.397904903, -4.88909109e-08, 0.917426646),
-        ["camp2"] = CFrame.new(20201.4648, 208.491318, 5309.35986, 0.976066351, -4.14286632e-08, -0.217472896, 4.45739197e-08, 1, 9.557243e-09, 0.217472896, -1.90221225e-08, 0.976066351),
+        ["Camp1"] = CFrame.new(19654.8438, 140.920105, 5302.79639, 0.917426646, -5.15326555e-08, -0.397904903, 6.67313671e-08, 1, 2.43487275e-08, 0.397904903, -4.88909109e-08, 0.917426646),
+        ["Camp2"] = CFrame.new(20201.4648, 208.491318, 5309.35986, 0.976066351, -4.14286632e-08, -0.217472896, 4.45739197e-08, 1, 9.557243e-09, 0.217472896, -1.90221225e-08, 0.976066351),
+        ["Camp3"] = CFrame.new(),
+        ["Camp4"] = CFrame.new(),
+        ["Cryogenic_Canal"] = CFrame.new(),
+        ["Frigid_Cavern"] = CFrame.new(),
+        ["Glacial_Grotto"] = CFrame.new(),
+        ["Overgrowth_Caves"] = CFrame.new(),
+        ["_"] = CFrame.new(),
     }
 
     local selectedCFrame2 = locations2[getgenv().SelectedOption2]
@@ -233,10 +240,10 @@ function doStuff()
 end
 
 
-local Paragraph = Tab2:CreateParagraph({Title = "Teleport Northern_Expedition", Content = "Teleport in Northern_Expedition Only"})
+local Paragraph = Tab2:CreateParagraph({Title = "Northern_Expedition", Content = "Teleport in Northern_Expedition Only"})
 local Dropdown2 = Tab2:CreateDropdown({
     Name = "Select a location",
-    Options = {"None","Northern_Summit","camp1","camp2","camp3","Cryogenic_Canal","Frigid_Cavern","Glacial Grotto","Overgrowth_Caves"},
+    Options = {"None","Northern_Summit","Camp1","Camp2","Camp3","Camp4","Cryogenic_Canal","Frigid_Cavern","Glacial_Grotto","Overgrowth_Caves"},
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
