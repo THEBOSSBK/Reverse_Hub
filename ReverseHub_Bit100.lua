@@ -229,39 +229,40 @@ local Dropdown3 = Tab2:CreateDropdown({
   --หน้าที่3
 local Tab3 = Window:CreateTab("Player", "user-2")
 local Label3 = Tab3:CreateLabel("Remove Oxygen", "droplets")
-local ToggleOxygen = Tab3:CreateToggle({
+local Button = Tab3:CreateButton({
     Name = "Remove Oxygen",
-    CurrentValue = false,
-    Flag = "RemoveOxygen",
-    Callback = function(Value)
-        _G.RemoveOxygen = Value -- กำหนดค่าให้ _G.RemoveOxygen
-        if Value then
-            spawn(function()
-                while _G.RemoveOxygen do
-                    wait(5) -- หน่วงเวลาเล็กน้อย
-                    local player = game:GetService("Players").LocalPlayer
-                    local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
-                    if client then
-                        -- ลบ oxygen
-                        if client:FindFirstChild("oxygen") then
-                            client.oxygen:Destroy()
-                        end
-                        -- ลบ oxygen(peaks)
-                        if client:FindFirstChild("oxygen(peaks)") then
-                            client["oxygen(peaks)"]:Destroy()
-                        end
-                        -- ลบ temperature
-                        if client:FindFirstChild("temperature") then
-                            client.temperature:Destroy()
-                        end
-                     else
-                    end
-                end
-            end)
+    Callback = function()
+        Rayfield:Notify({
+   Title = "Remove Oxygen",
+   Content = "Successfully",
+   Duration = 6.5,
+   Image = 4483362458,
+})
+        local player = game:GetService("Players").LocalPlayer
+        local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
+
+        if client then
+            -- ลบ oxygen
+            if client:FindFirstChild("oxygen") then
+                client.oxygen:Destroy()
+                print("oxygen ถูกลบ")
+            end
+
+            -- ลบ oxygen(peaks)
+            if client:FindFirstChild("oxygen(peaks)") then
+                client["oxygen(peaks)"]:Destroy()
+                print("oxygen(peaks) ถูกลบ")
+            end
+
+            -- ลบ temperature
+            if client:FindFirstChild("temperature") then
+                client.temperature:Destroy()
+                print("temperature ถูกลบ")
+            end
+        else
+            print("ไม่พบ client object")
         end
     end,
 })
-
-
 
 
