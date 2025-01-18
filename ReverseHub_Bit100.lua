@@ -170,14 +170,11 @@ local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
     Name = "Select Island",
-    Options = {"None", "Ancient_Isle", "Archeological_Site", "Birch_Cay", "Desolate_Deep", "Earmark_Island", "Forsaken_Shore", "Haddock_Rock", "Harvesters_Spike", "Moosewood", "Mushgrove_Swamp", "Northern_Expedition", "Roslit_Bay", "Snowcap_Island", "Statue_of_Sovereignty", "Sunstone_Island", "Terrapin_Island", "The_Arch", "Vertigo"},
+    Options = {"None","Ancient_Isle","Archeological_Site","Birch_Cay","Desolate_Deep","Earmark_Island","Forsaken_Shore","Haddock_Rock","Harvesters_Spike","Moosewood","Mushgrove_Swamp","Northern_Expedition","Roslit_Bay","Snowcap_Island","Statue_of_Sovereignty","Sunstone_Island","Terrapin_Island","The_Arch","Vertigo"},
     CurrentOption = "None",
     MultipleOptions = false,
     Flag = "Teleport_Island",
     Callback = function(Option)
-         if Option == "Ancient_Isle" then
-            print("55555")
-         end
         getgenv().SelectedOption = Option
         doStuff()
     end,
