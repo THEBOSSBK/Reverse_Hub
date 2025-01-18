@@ -153,7 +153,7 @@ local Toggle3 = Tab:CreateToggle({
 getgenv().SelectedOption = nil
 
 function doStuff()
-    if getgenv().SelectedOption == "Ancient Isle" then
+    if getgenv().SelectedOption == "Ancient_Isle" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
     elseif getgenv().SelectedOption == "Bannana" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
@@ -184,7 +184,7 @@ local Dropdown3 = Tab2:CreateDropdown({
    Name = "Dropdown Example",
    Options = {"Option 1","Option 2"},
    CurrentOption = {"Option 1"},
-   MultipleOptions = false,
+   MultipleOptions = true,
    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Options1)
          print(Options1)
