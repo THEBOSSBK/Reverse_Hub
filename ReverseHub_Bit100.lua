@@ -175,9 +175,18 @@ local Dropdown = Tab2:CreateDropdown({
     MultipleOptions = false,
     Flag = "Teleport_Island",
     Callback = function(Option)
-        getgenv().SelectedOption = Option
-        doStuff()
-    end,
+    if type(Option) == "table" then -- ตรวจสอบว่า Option เป็น table หรือไม่
+        for _, value in pairs(Option) do -- วนลูปผ่านค่าภายใน table
+            print(value) -- แสดงค่าของแต่ละรายการใน table
+            getgenv().SelectedOption = value -- กำหนดค่าให้ SelectedOption
+            doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
+        end
+    else
+        print(Option) -- แสดงค่าถ้า Option เป็น string
+        getgenv().SelectedOption = Option -- กำหนดค่าให้ SelectedOption
+        doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
+    end
+end,
 })
 
 local Dropdown3 = Tab2:CreateDropdown({
