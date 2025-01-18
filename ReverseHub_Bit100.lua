@@ -155,6 +155,7 @@ getgenv().SelectedOption = nil
 function doStuff()
     local locations = {
         ["None"] = nil,
+        ["Ancient_Archives"] = CFrame.new(),
         ["Ancient_Isle"] = CFrame.new(6064.54688, 194.980164, 312.77887, 0.998178661, 7.10222992e-08, -0.0603267364, -6.87813255e-08, 1, 3.9223881e-08, 0.0603267364, -3.50030867e-08, 0.998178661),
         ["Birch_Cay"] = CFrame.new(20, 5, 0),
         ["Desolate_Deep"] = CFrame.new(30, 5, 0),
@@ -191,7 +192,7 @@ local Tab2 = Window:CreateTab("Teleport", "plane")
 local Label2 = Tab2:CreateLabel("Island", "plane")
 local Dropdown = Tab2:CreateDropdown({
     Name = "Select Island",
-    Options = {"None","Ancient_Isle","Birch_Cay","Desolate_Deep","Enchant_Area","Forsaken_Shore","Haddock_Rock","Moosewood","Mushgrove_Swamp","Northern_Expedition","Roslit_Bay","Roslit_Volcano","Snowcap_Island","Statue_of_Sovereignty","Sunstone_Island","Terrapin_Island","The_Arch","The_Depths","Vertigo"},
+    Options = {"None","Ancient_Archives","Ancient_Isle","Birch_Cay","Desolate_Deep","Enchant_Area","Forsaken_Shore","Haddock_Rock","Moosewood","Mushgrove_Swamp","Northern_Expedition","Roslit_Bay","Roslit_Volcano","Snowcap_Island","Statue_of_Sovereignty","Sunstone_Island","Terrapin_Island","The_Arch","The_Depths","Vertigo"},
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
