@@ -155,7 +155,7 @@ getgenv().SelectedOption = nil
 function doStuff()
     if getgenv().SelectedOption == "Ancient_Isle" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
-    elseif getgenv().SelectedOption == "Bannana" then
+    if getgenv().SelectedOption == "Archeological_Site" then
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
     else
         print("Option ไม่มีผลลัพธ์")
@@ -173,7 +173,6 @@ local Dropdown = Tab2:CreateDropdown({
     Callback = function(Option)
         getgenv().SelectedOption = Option
         doStuff()
-        print(Option)
     end,
 })
 
