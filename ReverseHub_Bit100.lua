@@ -153,17 +153,38 @@ local Toggle3 = Tab:CreateToggle({
 getgenv().SelectedOption = nil
 
 function doStuff()
-    if getgenv().SelectedOption == "Ancient_Isle" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
-    elseif getgenv().SelectedOption == "Bannana" then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
+    local locations = {
+        ["None"] = nil,
+        ["Ancient_Isle"] = CFrame.new(0, 5, 0),
+        ["Archeological_Site"] = CFrame.new(10, 5, 0),
+        ["Birch_Cay"] = CFrame.new(20, 5, 0),
+        ["Desolate_Deep"] = CFrame.new(30, 5, 0),
+        ["Earmark_Island"] = CFrame.new(40, 5, 0),
+        ["Forsaken_Shore"] = CFrame.new(50, 5, 0),
+        ["Haddock_Rock"] = CFrame.new(60, 5, 0),
+        ["Harvesters_Spike"] = CFrame.new(70, 5, 0),
+        ["Moosewood"] = CFrame.new(80, 5, 0),
+        ["Mushgrove_Swamp"] = CFrame.new(90, 5, 0),
+        ["Northern_Expedition"] = CFrame.new(100, 5, 0),
+        ["Roslit_Bay"] = CFrame.new(110, 5, 0),
+        ["Snowcap_Island"] = CFrame.new(120, 5, 0),
+        ["Statue_of_Sovereignty"] = CFrame.new(130, 5, 0),
+        ["Sunstone_Island"] = CFrame.new(140, 5, 0),
+        ["Terrapin_Island"] = CFrame.new(150, 5, 0),
+        ["The_Arch"] = CFrame.new(160, 5, 0),
+        ["Vertigo"] = CFrame.new(170, 5, 0),
+    }
+
+    local selectedCFrame = locations[getgenv().SelectedOption]
+
+    if selectedCFrame then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = selectedCFrame
+        print("ผู้เล่นถูกวาร์ปไปยัง: " .. getgenv().SelectedOption)
     else
-        print("Option ไม่มีผลลัพธ์")
-        print(SelectedOption)
-
-
+        print("Option ไม่มีผลลัพธ์ หรือไม่มีการกำหนดค่า: " .. tostring(getgenv().SelectedOption))
     end
 end
+
 
 -- หน้าที่ 2
 local Tab2 = Window:CreateTab("Teleport", "plane")
@@ -173,7 +194,6 @@ local Dropdown = Tab2:CreateDropdown({
     Options = {"None","Ancient_Isle","Archeological_Site","Birch_Cay","Desolate_Deep","Earmark_Island","Forsaken_Shore","Haddock_Rock","Harvesters_Spike","Moosewood","Mushgrove_Swamp","Northern_Expedition","Roslit_Bay","Snowcap_Island","Statue_of_Sovereignty","Sunstone_Island","Terrapin_Island","The_Arch","Vertigo"},
     CurrentOption = "None",
     MultipleOptions = false,
-    Flag = "Teleport_Island",
     Callback = function(Option)
     if type(Option) == "table" then -- ตรวจสอบว่า Option เป็น table หรือไม่
         for _, value in pairs(Option) do -- วนลูปผ่านค่าภายใน table
