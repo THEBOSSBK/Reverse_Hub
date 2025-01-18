@@ -229,15 +229,10 @@ local Dropdown3 = Tab2:CreateDropdown({
   --หน้าที่3
 local Tab3 = Window:CreateTab("Player", "user-2")
 local Label3 = Tab3:CreateLabel("Remove Oxygen", "droplets")
-local Button = Tab3:CreateButton({
+local Button1 = Tab3:CreateButton({
     Name = "Remove Oxygen",
     Callback = function()
-        Rayfield:Notify({
-   Title = "Remove Oxygen",
-   Content = "Successfully",
-   Duration = 6.5,
-   Image = 4483362458,
-})
+        
         local player = game:GetService("Players").LocalPlayer
         local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
 
