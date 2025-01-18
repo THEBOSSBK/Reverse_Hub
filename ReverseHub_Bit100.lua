@@ -209,6 +209,7 @@ local Dropdown = Tab2:CreateDropdown({
     end
 end,
 })
+local Paragraph = Tab2:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
 
 local Dropdown3 = Tab2:CreateDropdown({
    Name = "Dropdown Example",
