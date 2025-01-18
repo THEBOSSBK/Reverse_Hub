@@ -180,7 +180,7 @@ local Dropdown = Tab2:CreateDropdown({
     end,
 })
 
-local Dropdown = Tab:CreateDropdown({
+local Dropdown3 = Tab2:CreateDropdown({
    Name = "Dropdown Example",
    Options = {"Option 1","Option 2"},
    CurrentOption = {"Option 1"},
