@@ -176,7 +176,8 @@ local Dropdown = Tab2:CreateDropdown({
     Flag = "Teleport_Island",
     Callback = function(Option)
          if Option == "Ancient_Isle" then
-            print("55555"),
+            print("55555")
+         end
         getgenv().SelectedOption = Option
         doStuff()
     end,
