@@ -232,7 +232,6 @@ local Label3 = Tab3:CreateLabel("Remove Oxygen", "droplets")
 local Button1 = Tab3:CreateButton({
     Name = "Remove Oxygen",
     Callback = function()
-        
         local player = game:GetService("Players").LocalPlayer
         local client = workspace:FindFirstChild(player.Name) and workspace[player.Name]:FindFirstChild("client")
 
