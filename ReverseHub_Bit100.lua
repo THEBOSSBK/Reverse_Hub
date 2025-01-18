@@ -161,9 +161,9 @@ local Dropdown = Tab2:CreateDropdown({
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
-        if Option == "Ancient Isle" then
+        if Option == "Ancient_Isle" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 5, 0)
-        elseif Option == "Bannana" then
+        elseif Option == "Archeological_Site" then
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 10, 0)
         else
             print("ไม่มีการวาร์ปสำหรับตัวเลือกนี้")
