@@ -184,12 +184,17 @@ local Dropdown3 = Tab2:CreateDropdown({
    Name = "Dropdown Example",
    Options = {"Option 1","Option 2"},
    CurrentOption = {"Option 1"},
-   MultipleOptions = true,
+   MultipleOptions = false,
    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Options1)
-         print(Options1)
-   
-   end,
+   Callback = function(Option)
+        if type(Option) == "table" then
+            for _, value in pairs(Option) do
+                print(value) -- แสดงค่าจาก table
+            end
+        else
+            print(Option) -- แสดงค่าถ้าเป็น string
+        end
+    end,
 })
 
 
