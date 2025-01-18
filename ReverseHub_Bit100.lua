@@ -209,22 +209,27 @@ local Dropdown = Tab2:CreateDropdown({
     end
 end,
 })
-local Paragraph = Tab2:CreateParagraph({Title = "Paragraph Example", Content = "Paragraph Example"})
 
-local Dropdown3 = Tab2:CreateDropdown({
-   Name = "Dropdown Example",
-   Options = {"Option 1","Option 2"},
-   CurrentOption = {"Option 1"},
-   MultipleOptions = false, -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Option)
-        if type(Option) == "table" then
-            for _, value in pairs(Option) do
-                print(value) -- แสดงค่าจาก table
-            end
-        else
-            print(Option) -- แสดงค่าถ้าเป็น string
+--Northern_Expedition
+local Paragraph = Tab2:CreateParagraph({Title = "Teleport Northern_Expedition", Content = "Teleport in Northern_Expedition Only"})
+local Dropdown2 = Tab2:CreateDropdown({
+    Name = "Select a location",
+    Options = {"None","Northern_Summit","Cryogenic_Canal","Frigid_Cavern","Glacial Grotto","Overgrowth_Caves"},
+    CurrentOption = "None",
+    MultipleOptions = false,
+    Callback = function(Option)
+    if type(Option) == "table" then -- ตรวจสอบว่า Option เป็น table หรือไม่
+        for _, value in pairs(Option) do -- วนลูปผ่านค่าภายใน table
+            print(value) -- แสดงค่าของแต่ละรายการใน table
+            getgenv().SelectedOption = value -- กำหนดค่าให้ SelectedOption
+            doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
         end
-    end,
+    else
+        print(Option) -- แสดงค่าถ้า Option เป็น string
+        getgenv().SelectedOption = Option -- กำหนดค่าให้ SelectedOption
+        doStuff() -- เรียกใช้งานฟังก์ชัน doStuff
+    end
+end,
 })
 
 
