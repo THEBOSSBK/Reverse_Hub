@@ -244,7 +244,7 @@ end
 local Paragraph = Tab2:CreateParagraph({Title = "Northern_Expedition", Content = "Teleport in Northern_Expedition Only"})
 local Dropdown2 = Tab2:CreateDropdown({
     Name = "Select a location",
-    Options = {"None","Northern_Summit","Camp1","Camp2","Camp3","Camp4","Cryogenic_Canal","Frigid_Cavern","Glacial_Grotto","Overgrowth_Caves"},
+    Options = {"None","Northern_Summit","Camp1","Camp2","Camp3","Camp4","Camp5","Cryogenic_Canal","Frigid_Cavern","Glacial_Grotto","Overgrowth_Caves"},
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(Option)
