@@ -137,7 +137,7 @@ local Toggle3 = Tab:CreateToggle({
                         for _, gui in pairs(LocalPlayer.PlayerGui:GetChildren()) do
                             if gui:IsA("ScreenGui") and gui.Name == "reel" then
                                 if gui:FindFirstChild("bar") then
-                                    wait(0.15)
+                                    wait(1.15)
                                     ReplicatedStorage.events.reelfinished:FireServer(100, true)
                                 end
                             end
