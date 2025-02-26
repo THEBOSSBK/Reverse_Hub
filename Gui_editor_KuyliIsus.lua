@@ -9,10 +9,18 @@
 
 ]]
 
+if debugX then
+	warn('Initialising ReverseHub')
+end
 
+local function getService(name)
+    local service = game:GetService(name)
+    return if cloneref then cloneref(service) else service
+end
 
-local InterfaceBuild = '9NBD'
-local Release = "Build 1.65"
+local requestsDisabled = getgenv and getgenv().DISABLE_ReverseHub_REQUESTS
+local InterfaceBuild = '3K3W'
+local Release = "Build 1.672"
 local ReverseHubFolder = "ReverseHub"
 local ConfigurationFolder = ReverseHubFolder.."/Configurations"
 local ConfigurationExtension = ".rfld"
@@ -20,14 +28,17 @@ local settingsTable = {
 	General = {
 		-- if needs be in order just make getSetting(name)
 		ReverseHubOpen = {Type = 'bind', Value = 'K', Name = 'ReverseHub Keybind'},
+		-- buildwarnings
+		-- ReverseHubprompts
+
 	},
 	System = {
 		usageAnalytics = {Type = 'toggle', Value = true, Name = 'Anonymised Analytics'},
 	}
 }
 
-local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
+local HttpService = getService('HttpService')
+local RunService = getService('RunService')
 
 -- Environment Check
 local useStudio = RunService:IsStudio() or false
@@ -37,55 +48,75 @@ local cachedSettings
 local prompt = useStudio and require(script.Parent.prompt) or loadstring(game:HttpGet('https://raw.githubusercontent.com/SiriusSoftwareLtd/Sirius/refs/heads/request/prompt.lua'))()
 local request = (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request) or http_request or request
 
+
+
 local function loadSettings()
 	local file = nil
+	
+	local success, result =	pcall(function()
+		task.spawn(function()
+			if isfolder and isfolder(ReverseHubFolder) then
+				if isfile and isfile(ReverseHubFolder..'/settings'..ConfigurationExtension) then
+					file = readfile(ReverseHubFolder..'/settings'..ConfigurationExtension)
+				end
+			end
 
-	if isfolder and isfolder(ReverseHubFolder) then
-		if isfile and isfile(ReverseHubFolder..'/settings'..ConfigurationExtension) then
-			file = readfile(ReverseHubFolder..'/settings'..ConfigurationExtension)
-		end
-	end
-
-	-- for debug in studio
-	if useStudio then
-		file = [[
-		{"General":{"ReverseHubOpen":{"Value":"K","Type":"bind","Name":"ReverseHub Keybind","Element":{"HoldToInteract":false,"Name":"ReverseHub Keybind","Set":null,"CallOnChange":true,"Callback":null,"CurrentKeybind":"K"}}},"System":{"usageAnalytics":{"Value":false,"Type":"toggle","Name":"Anonymised Analytics","Element":{"Ext":true,"Name":"Anonymised Analytics","Set":null,"CurrentValue":true,"Callback":null}}}}
+			-- for debug in studio
+			if useStudio then
+				file = [[
+		{"General":{"ReverseHubOpen":{"Value":"K","Type":"bind","Name":"ReverseHub Keybind","Element":{"HoldToInteract":false,"Ext":true,"Name":"ReverseHub Keybind","Set":null,"CallOnChange":true,"Callback":null,"CurrentKeybind":"K"}}},"System":{"usageAnalytics":{"Value":false,"Type":"toggle","Name":"Anonymised Analytics","Element":{"Ext":true,"Name":"Anonymised Analytics","Set":null,"CurrentValue":false,"Callback":null}}}}
 	]]
-	end
+			end
 
 
-	if file then
-		local success, decodedFile = pcall(function() return HttpService:JSONDecode(file) end)
-		if success then
-			file = decodedFile
-		else
-			file = {}
-		end
-	else
-		file = {}
-	end
+			if file then
+				local success, decodedFile = pcall(function() return HttpService:JSONDecode(file) end)
+				if success then
+					file = decodedFile
+				else
+					file = {}
+				end
+			else
+				file = {}
+			end
 
 
-	if not settingsCreated then 
-		cachedSettings = file
-		return
-	end
+			if not settingsCreated then 
+				cachedSettings = file
+				return
+			end
 
-	if file ~= {} then
-		for categoryName, settingCategory in pairs(settingsTable) do
-			if file[categoryName] then
-				for settingName, setting in pairs(settingCategory) do
-					if file[categoryName][settingName] then
-						setting.Value = file[categoryName][settingName].Value
-						setting.Element:Set(setting.Value)
+			if file ~= {} then
+				for categoryName, settingCategory in pairs(settingsTable) do
+					if file[categoryName] then
+						for settingName, setting in pairs(settingCategory) do
+							if file[categoryName][settingName] then
+								setting.Value = file[categoryName][settingName].Value
+								setting.Element:Set(setting.Value)
+							end
+						end
 					end
 				end
 			end
+		end)
+	end)
+	
+	if not success then 
+		if writefile then
+			warn('ReverseHub had an issue accessing configuration saving capability.')
 		end
 	end
 end
 
+if debugX then
+	warn('Now Loading Settings Configuration')
+end
+
 loadSettings()
+
+if debugX then
+	warn('Settings Loaded')
+end
 
 --if not cachedSettings or not cachedSettings.System or not cachedSettings.System.usageAnalytics then
 --	local fileFunctionsAvailable = isfile and writefile and readfile
@@ -111,13 +142,39 @@ loadSettings()
 --	repeat task.wait() until analytics ~= nil
 --end
 
-if #cachedSettings == 0 or (cachedSettings.System and cachedSettings.System.usageAnalytics and cachedSettings.System.usageAnalytics.Value) then
-	if useStudio then
-		print('Sending analytics')
-	else
-		local reporter = loadstring(game:HttpGet("https://analytics.sirius.menu/reporter"))()
-		reporter.report("0193dbf8-7da1-79de-b399-2c0f68b0a9ad", Release, InterfaceBuild)
+if not requestsDisabled then
+	if debugX then
+		warn('Querying Settings for Reporter Information')
 	end
+	local function sendReport()
+		if useStudio then
+			print('Sending Analytics')
+		else
+			if debugX then warn('Reporting Analytics') end
+			task.spawn(function()
+				local success, reporter = pcall(function()
+					return loadstring(game:HttpGet("https://analytics.sirius.menu/v1/reporter", true))()
+				end)
+				if success and reporter then
+					pcall(function()
+						reporter.report("ReverseHub", Release, InterfaceBuild)
+					end)
+				else
+					warn("Failed to load or execute the reporter. \nPlease notify ReverseHub developers at sirius.menu/discord.")
+				end
+			end)
+			if debugX then warn('Finished Report') end
+		end
+	end
+	if cachedSettings and (#cachedSettings == 0 or (cachedSettings.System and cachedSettings.System.usageAnalytics and cachedSettings.System.usageAnalytics.Value)) then
+		sendReport()
+	elseif not cachedSettings then
+		sendReport()
+	end
+end
+
+if debugX then
+	warn('Moving on to continue initialisation')
 end
 
 local ReverseHubLibrary = {
@@ -504,10 +561,10 @@ local ReverseHubLibrary = {
 
 
 -- Services
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-local Players = game:GetService("Players")
-local CoreGui = game:GetService("CoreGui")
+local UserInputService = getService("UserInputService")
+local TweenService = getService("TweenService")
+local Players = getService("Players")
+local CoreGui = getService("CoreGui")
 
 -- Interface Management
 
@@ -515,6 +572,7 @@ local ReverseHub = useStudio and script.Parent:FindFirstChild('ReverseHub') or g
 local buildAttempts = 0
 local correctBuild = false
 local warned
+local globalLoaded
 
 repeat
 	if ReverseHub:FindFirstChild('Build') and ReverseHub.Build.Value == InterfaceBuild then
@@ -596,7 +654,7 @@ local dragOffsetMobile = 150
 ReverseHub.DisplayOrder = 100
 LoadingFrame.Version.Text = Release
 
-
+-- Thanks to Latte Softworks for the Lucide integration for Roblox
 local Icons = useStudio and require(script.Parent.icons) or loadstring(game:HttpGet('https://raw.githubusercontent.com/SiriusSoftwareLtd/Rayfield/refs/heads/main/icons.lua'))()
 
 -- Variables
@@ -663,7 +721,7 @@ local function getIcon(name : string)
 
 	local r = sizedicons[name]
 	if not r then
-		error("Lucide Icons: Failed to find icon by the name of \"" .. name .. "\.", 2)
+		error(`Lucide Icons: Failed to find icon by the name of "{name}"`, 2)
 	end
 
 	local rirs = r[2]
@@ -692,7 +750,7 @@ local function makeDraggable(object, dragObject, enableTaptic, tapticOffset)
 	local offset = Vector2.zero
 	local screenGui = object:FindFirstAncestorWhichIsA("ScreenGui")
 	if screenGui and screenGui.IgnoreGuiInset then
-		offset += game:GetService('GuiService'):GetGuiInset()
+		offset += getService('GuiService'):GetGuiInset()
 	end
 
 	local function connectFunctions()
@@ -773,14 +831,16 @@ local function UnpackColor(Color)
 end
 
 local function LoadConfiguration(Configuration)
-	local Data = HttpService:JSONDecode(Configuration)
+	local success, Data = pcall(function() return HttpService:JSONDecode(Configuration) end)
 	local changed
+
+	if not success then warn('ReverseHub had an issue decoding the configuration file, please try delete the file and reopen ReverseHub.') return end
 
 	-- Iterate through current UI elements' flags
 	for FlagName, Flag in pairs(ReverseHubLibrary.Flags) do
 		local FlagValue = Data[FlagName]
 
-		if FlagValue then
+		if (typeof(FlagValue) == 'boolean' and FlagValue == false) or FlagValue then
 			task.spawn(function()
 				if Flag.Type == "ColorPicker" then
 					changed = true
@@ -803,7 +863,11 @@ local function LoadConfiguration(Configuration)
 end
 
 local function SaveConfiguration()
-	if not CEnabled then return end
+	if not CEnabled or not globalLoaded then return end
+
+	if debugX then
+		print('Saving')
+	end
 
 	local Data = {}
 	for i, v in pairs(ReverseHubLibrary.Flags) do
@@ -836,6 +900,10 @@ local function SaveConfiguration()
 		TextBox.Position = UDim2.new(0.5, 0, 0, 30)
 		TextBox.Text = HttpService:JSONEncode(Data)
 		TextBox.ClearTextOnFocus = false
+	end
+
+	if debugX then
+		warn(HttpService:JSONEncode(Data))
 	end
 
 	if writefile then
@@ -1322,6 +1390,8 @@ end
 
 local function createSettings(window)
 	if not (writefile and isfile and readfile and isfolder and makefolder) and not useStudio then
+		if Topbar['Settings'] then Topbar.Settings.Visible = false end
+		Topbar['Search'].Position = UDim2.new(1, -75, 0.5, 0)
 		warn('Can\'t create settings as no file-saving functionality is available.')
 		return
 	end
@@ -1385,7 +1455,20 @@ local function createSettings(window)
 end
 
 
+
 function ReverseHubLibrary:CreateWindow(Settings)
+	if ReverseHub:FindFirstChild('Loading') then
+		if getgenv and not getgenv().ReverseHubCached then
+			ReverseHub.Enabled = true
+			ReverseHub.Loading.Visible = true
+
+			task.wait(1.4)
+			ReverseHub.Loading.Visible = false
+		end
+	end
+
+	if getgenv then getgenv().ReverseHubCached = true end
+
 	if not correctBuild and not Settings.DisableBuildWarnings then
 		task.delay(3, 
 			function() 
@@ -1915,7 +1998,7 @@ function ReverseHubLibrary:CreateWindow(Settings)
 					TweenService:Create(Button.UIStroke, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {Transparency = 0}):Play()
 				else
 					if not ButtonSettings.Ext then
-						SaveConfiguration()
+						SaveConfiguration(ButtonSettings.Name..'\n')
 					end
 					TweenService:Create(Button, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {BackgroundColor3 = SelectedTheme.ElementBackgroundHover}):Play()
 					TweenService:Create(Button.ElementIndicator, TweenInfo.new(0.6, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
@@ -2082,7 +2165,7 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				local r,g,b = math.floor((h*255)+0.5),math.floor((s*255)+0.5),math.floor((v*255)+0.5)
 				ColorPickerSettings.Color = Color3.fromRGB(r,g,b)
 				if not ColorPickerSettings.Ext then
-					SaveConfiguration()
+					SaveConfiguration(ColorPickerSettings.Flag..'\n'..tostring(ColorPickerSettings.Color))
 				end
 			end)
 			--RGB
@@ -2441,6 +2524,12 @@ function ReverseHubLibrary:CreateWindow(Settings)
 
 			function InputSettings:Set(text)
 				Input.InputFrame.InputBox.Text = text
+				InputSettings.CurrentValue = text
+
+				local Success, Response = pcall(function()
+					InputSettings.Callback(text)
+				end)
+
 				if not InputSettings.Ext then
 					SaveConfiguration()
 				end
@@ -2976,6 +3065,8 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				end
 
 				local Success, Response = pcall(function()
+					if debugX then warn('Running toggle \''..ToggleSettings.Name..'\' (Interact)') end
+
 					ToggleSettings.Callback(ToggleSettings.CurrentValue)
 				end)
 
@@ -3024,6 +3115,8 @@ function ReverseHubLibrary:CreateWindow(Settings)
 				end
 
 				local Success, Response = pcall(function()
+					if debugX then warn('Running toggle \''..ToggleSettings.Name..'\' (:Set)') end
+
 					ToggleSettings.Callback(ToggleSettings.CurrentValue)
 				end)
 
@@ -3323,7 +3416,12 @@ function ReverseHubLibrary:CreateWindow(Settings)
 		end
 	end
 
-	createSettings(Window)
+	local success, result = pcall(function()
+		createSettings(Window)
+	end)
+	
+	if not success then warn('ReverseHub had an issue creating settings.') end
+	
 	return Window
 end
 
@@ -3346,6 +3444,7 @@ function ReverseHubLibrary:IsVisible(): boolean
 	return not Hidden
 end
 
+local hideHotkeyConnection -- Has to be initialized here since the connection is made later in the script
 function ReverseHubLibrary:Destroy()
 	hideHotkeyConnection:Disconnect()
 	ReverseHub:Destroy()
@@ -3477,11 +3576,16 @@ for _, TopbarButton in ipairs(Topbar:GetChildren()) do
 	end
 end
 
+
 function ReverseHubLibrary:LoadConfiguration()
 	local config
 
+	if debugX then
+		warn('Loading Configuration')
+	end
+
 	if useStudio then
-		config = [[{"Toggle1adwawd":true,"Keybind1":"B","InputExample":"","Slider1dawd":120,"ColorPicfsefker1":{"B":255,"G":255,"R":255},"Slidefefsr1":80,"dawdawd":"","ColorPicker1awd":{"B":255,"G":255,"R":255},"Dropdown1":["Ocean"]}]]
+		config = [[{"Toggle1adwawd":true,"ColorPicker1awd":{"B":255,"G":255,"R":255},"Slider1dawd":100,"ColorPicfsefker1":{"B":255,"G":255,"R":255},"Slidefefsr1":80,"dawdawd":"","Input1":"hh","Keybind1":"B","Dropdown1":["Ocean"]}]]
 	end
 
 	if CEnabled then
@@ -3500,7 +3604,7 @@ function ReverseHubLibrary:LoadConfiguration()
 				end
 			else
 				notified = true
-				ReverseHubLibrary:Notify({Title = "ReverseHub Configurations", Content = "We couldn't enable Configuration Saving as you are not using file supported software.", Image = 4384402990})
+				ReverseHubLibrary:Notify({Title = "ReverseHub Configurations", Content = "We couldn't enable Configuration Saving as you are not using software with filesystem support.", Image = 4384402990})
 			end
 		end)
 
@@ -3511,7 +3615,11 @@ function ReverseHubLibrary:LoadConfiguration()
 			ReverseHubLibrary:Notify({Title = "ReverseHub Configurations", Content = "We've encountered an issue loading your configuration correctly.\n\nCheck the Developer Console for more information.", Image = 4384402990})
 		end
 	end
+
+	globalLoaded = true
 end
+
+
 
 if useStudio then
 	-- run w/ studio
@@ -3635,10 +3743,10 @@ if useStudio then
 
 	local Input = Tab:CreateInput({
 		Name = "Input Example",
-		CurrentValue = "",
+		CurrentValue = "Helo",
 		PlaceholderText = "Adaptive Input",
 		RemoveTextAfterFocusLost = false,
-		Flag = 'InputExample',
+		Flag = 'Input1',
 		Callback = function(Text)
 			-- The function that takes place when the input is changed
 			-- The variable (Text) is a string for the value in the text box
@@ -3746,14 +3854,14 @@ if not useStudio then
 	end
 end
 
-task.delay(4, function() 
+task.delay(4, function()
 	ReverseHubLibrary.LoadConfiguration()
-	if Main:FindFirstChild('Notice') and Main.Notice.Visible then 
+	if Main:FindFirstChild('Notice') and Main.Notice.Visible then
 		TweenService:Create(Main.Notice, TweenInfo.new(0.5, Enum.EasingStyle.Exponential, Enum.EasingDirection.InOut), {Size = UDim2.new(0, 100, 0, 25), Position = UDim2.new(0.5, 0, 0, -100), BackgroundTransparency = 1}):Play()
 		TweenService:Create(Main.Notice.Title, TweenInfo.new(0.3, Enum.EasingStyle.Exponential), {TextTransparency = 1}):Play()
 
 		task.wait(0.5)
-		Main.Notice.Visible = false 
+		Main.Notice.Visible = false
 	end
 end)
 
