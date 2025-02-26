@@ -7,7 +7,7 @@ local Window = ReverseHub:CreateWindow({
    LoadingSubtitle = "by THEBOSS_K1Y",
    Theme = "Green", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
-   DisableRayfieldPrompts = false,
+   DisableReverseHubPrompts = true,
    DisableBuildWarnings = true, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
 
    ConfigurationSaving = {
